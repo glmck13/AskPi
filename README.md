@@ -36,4 +36,18 @@ In order to interact with your assitant, open a web browser on your smart phone 
 ![](/docs/askpi.png)  
 The box is simply a text-input box.  You can choose to type a message directly into this box, or better yet, invoke the STT feature on your smart phone to voice a message.  To accees the speech-to-text capabiltiy on an iPhone, for example, first tap somewhere inside the text box.  At this point a keyboard will appear on your screen which contains a small microphone icon on the bottom:  
 ![](/docs/iphone.png)  
-Tap the microphoe, and utter some text.  After the text is populated in the text box, click submit.
+Tap the microphone, and utter some text.  After the text is populated in the text box, click submit.  Now it's time for your Pi to process the message based on the instructions you've specified within "assist.dat".  The "assist.dat" file is structured as a series of "expr" or "grep"-like regular expressions, followed by commands to execute once a regex is matched.  Lines in the file are ignored until a regex is encountered that matches the supplied input text.  Once a matching regex is encountered, all subsequest lines in the file are processed until a line is found that begins with a period ".".  
+
+If a line does **not** start with a special character (more on those below), it is treated as a text string that is passed to the text-to-speech engine for subsequent output.  These lines can incorporate embedded shell commands - using '$( )' syntax - to include dynamic content in the output.   
+
+Altermatively, if a line begins with any of the special characters below, it is processed as described in the table:  
+
+| Char | Meaning |
+| --- | --- |
+| '#' | Treat line as a comment |
+| '!' | Pass line to shell for execution |
+| '.' | Exit script processing |
+| '=' | Match supplied text against regex pattern |
+| '+' | Match (previous & current) text against regex pattern |
+| '~' | Override last text assignment |
+
