@@ -8,4 +8,4 @@ In essence, the personal assistant is composed of three components:
 2. a command processing engine
 3. a text-to-speech (TTS) utility
   
-Once the STT part is solved, the other components of the solution are relatively easy to address.  Aay scripting language can handle #2, while pico2wave/espeak/etc. are viable alternatives for TTS.
+Once the STT part is solved, the other components of the solution are relatively easy to address.  Any scripting language can handle #2, while pico2wave/espeak/etc. are viable alternatives for TTS.  The difficulty is in trying to implement a stand-alone STT service on the Pi that's halway decent.  Moreover, a mechanism must be designed to detect when a user starts & stops speaking. 
