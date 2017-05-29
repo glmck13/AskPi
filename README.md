@@ -15,3 +15,6 @@ Then it dawned on me... Mobile phones are one of the best STT appliances out the
 So if I need a mobile phone, how is this any differnet from just using the vioce assitant that's already built into the phone?  First of all, by hosting the processing engine locally, I can create a much more personal & customized experience.  If I ask my assitant for sport scores, for example, it might play the scores for just my teams.  Moreover, I can create customized vioce assistants for special events, like birthday parties, business meetings, etc.  
 
 Enough background, let's talk about how to install and configure the solution.
+
+## Installation
+## Configuration
