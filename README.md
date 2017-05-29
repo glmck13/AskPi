@@ -32,6 +32,8 @@ cd /var/www/html/Askpi
 chmod +x *.cgi
 ```
 ## Usage & Configuration
-In order to interact with your assitant, open a web browser on some client host (e.g. a smart phone), and navigate to the URL where you installed Askpi.  You'll see a screen which looks like this:  
+In order to interact with your assitant, open a web browser on your smart phone (or any other client), and navigate to the URL where you installed Askpi.  You'll see a screen which looks like this:  
 ![](/docs/askpi.png)
-
+The box is simply a text-input box.  You can choose to type a message directly into this box, or better yet, invoke the STT feature on your smart phone to voice a message.  To accees the speech-to-text capabiltiy on an iPhone, for example, first tap somewhere inside the text box.  At this point a keyboard will appear on your screen which contains a small microphone icon on the bottom:  
+![](/docs/iphone.png)
+Tap the microphoe, and utter some text.  After the text is populated in the text box, click submit.
