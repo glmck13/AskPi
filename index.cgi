@@ -22,7 +22,7 @@ do
 	[ "$v" ] && export $v
 done
 
-LastWord=$(urlencode -d "$LastWord")
+LastWord=$(urlencode -d "$LastWord") lastword=""
 Speech=$(urlencode -d "$Speech")
 Response=""
 Match="n"
@@ -46,7 +46,7 @@ if [ "$Speech" ]; then
 			;
 
 		elif [ "$Token" = "~" ]; then
-			LastWord=$(urlencode -d "$Pattern")
+			lastword=$(eval print "$Pattern")
 
 		elif [ "$Token" = "!" ]; then
 			eval "$Pattern"
@@ -71,7 +71,7 @@ AnnounceButton[${Announce:-n}]="checked"
 
 cat - <<EOF
 Content-type: text/html
-Set-Cookie: LastWord=$(urlencode "$Speech")
+Set-Cookie: LastWord=$(urlencode "${lastword:-$Speech}")
 
 <html>
 <head>
