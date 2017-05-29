@@ -3,7 +3,7 @@ A lightweight personal assitant for your Linux/Raspberry Pi host
 ## Background
 For some time I've wanted to convert my Raspberry Pi into a personal assitant, like Amazon's Alexa, Apple's Siri, etc.  I dabbled with [Amazon's Alexa Skill Kit (ASK)](https://developer.amazon.com/alexa-skills-kit), and [Facebook's WIT](https://wit.ai/), but was frustrated since I had to develop and host my app in their cloud.  Moreover, I wasn't looking to develop a very sophisticated voice command system, just something that could respond to some very basic utterances.  
 
-In essence, the personal assistant is composed of three components:
+In essence, a personal assistant is composed of three components:
 1. a speech-to-text (STT) voice recognition service
 2. a command processing engine
 3. a text-to-speech (TTS) utility
@@ -14,4 +14,4 @@ Then it dawned on me... Mobile phones are one of the best STT appliances out the
 
 So if I need a mobile phone, how is this any differnet from just using the vioce assitant that's already built into the phone?  First of all, by hosting the processing engine locally, I can create a much more personal & customized experience.  If I ask my assitant for sport scores, for example, it might play the scores for just my teams.  Moreover, I can create customized vioce assistants for special events, like birthday parties, business meetings, etc.  
 
-Enoungh background, let's talk about how to install and configure the solution.
+Enough background, let's talk about how to install and configure the solution.
