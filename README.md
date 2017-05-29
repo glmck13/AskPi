@@ -31,4 +31,7 @@ chown -R www-data:www-data .
 cd /var/www/html/Askpi
 chmod +x *.cgi
 ```
-## Configuration
+## Usage & Configuration
+In order to interact with your assitant, open a web browser on some client host (e.g. a smart phone), and navigate to the URL where you installed Askpi.  You'll see a screen which looks like this:  
+![](/docs/askpi.png)
+
