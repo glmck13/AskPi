@@ -17,4 +17,5 @@ So if I need a mobile phone, how is this any differnet from just using the vioce
 Enough background, let's talk about how to install and configure the solution.
 
 ## Installation
+Start with a default raspbian load for the Pi, and follow the [installation instructions on the "MyVitals" wiki](https://github.com/glmck13/MyVitals/wiki/1-Install) to configure a web server & sound support.  Don't bother with any of the bluetooth setup, since that won't be needed for this project. 
 ## Configuration
