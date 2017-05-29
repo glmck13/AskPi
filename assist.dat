@@ -2,6 +2,21 @@
 Hello. My name is pi.  You can ask me things such as, tell me the weather, or what is the time.  How can I help you today?
 .
 
+=.*send.*mail
+~useradd:
+To what address?
+.
+
++useradd:.*
+~mailto:$Speech
+What do you want to say?
+.
+
++mailto:.*
+!sendsms.sh "${LastWord#*:}" "Message from Askpi" "$Speech"
+Message sent!
+.
+
 =.*date.*
 =.*time.*
 Today is $(date +"%A %B %d %Y").
@@ -10,6 +25,10 @@ The time is $(date +"%r").
 
 =.*weather.*
 The current forecast: $(curl -s 'https://forecast-v3.weather.gov/point/39.2851,-76.8147?view=plain&mode=min' | grep -m1 -A1 forecast-label | sed -e "s/<[^>]*>/ /g")
+.
+
+=.*mass .*reading.*
+!mpg123 -4 http://ccc.usccb.org/cccradio/NABPodcasts/$(date +"%y_%m_%d").mp3
 .
 
 =.*
