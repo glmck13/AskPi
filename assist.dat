@@ -2,7 +2,7 @@
 Hello. My name is pi.  You can ask me things such as, tell me the weather, or what is the time.  How can I help you today?
 .
 
-=.*send.*mail
+=.*send.*mail.*
 ~useradd:
 To what address?
 .
