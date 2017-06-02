@@ -84,6 +84,7 @@ Set-Cookie: LastWord=$(urlencode "${lastword:-$Speech}")
 
 <body>
 <form action="$SCRIPT_NAME" method="post">
+	Enter your message:
 	<br><textarea rows=8 cols=40 name="Speech" /></textarea>
 	<br>Announce:
 	<input type="radio" name="Announce" value="y" ${AnnounceButton["y"]} />Y
