@@ -6,7 +6,7 @@ NEXTWAV=nextwav.cfg DATAFILE=assist.dat
 
 nextwav=$(<$NEXTWAV); (( nextwav = ++nextwav % 10 )); print $nextwav >$NEXTWAV
 
-TMPWAV=audio$nextwav.wav; rm -f $TMPWAV
+TMPWAV=./tmp/audio$nextwav.wav; rm -f $TMPWAV
 
 exec 2>&1
 
@@ -25,6 +25,7 @@ done
 LastWord=$(urlencode -d "$LastWord") lastword=""
 Speech=$(urlencode -d "$Speech")
 Response=""
+Html=""
 Match="n"
 
 if [ "$Speech" ]; then
@@ -53,6 +54,9 @@ if [ "$Speech" ]; then
 
 		elif [ "$Token" = "." ]; then
 			break
+
+		elif [ "$Token" = "'" ]; then
+			Html+=$(eval print "$line")
 
 		else
 			Response+=" "
@@ -93,6 +97,14 @@ EOF
 <audio controls>
 <source src="${SCRIPT_NAME%$(basename $SCRIPT_NAME)}$TMPWAV" type="audio/wav">
 </audio> 
+EOF
+
+[ "$Response" ] && cat - <<EOF
+<p>$Response</p>
+EOF
+
+[ "$Html" ] && cat - <<EOF
+<p>$Html</p>
 EOF
 
 cat - <<EOF
