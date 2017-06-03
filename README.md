@@ -20,8 +20,8 @@ Enough background, let's talk about how to install and configure the solution.
 Start with a default raspbian build for the Pi, and follow the [installation instructions on the "MyVitals" wiki](https://github.com/glmck13/MyVitals/wiki/1-Install) to configure a web server & sound support.  Don't bother with any of the Bluetooth setup, since that won't be needed for this project.  You'll also need to install a few more packages:
 ```
 sudo ksh
-apt install gridsite-clients # contains urlencode
-apt install libttspico-utils # contains pico2wave
+apt install gridsite-clients # contains urlencode utility
+apt install libttspico-utils # contains pico2wave text-to-speech engine
 ```
 Now that you have the basic server platform installed, copy the supplied .cgi, .dat, and .cfg files somewhere under /var/www/html.  I created an "Askpi" folder, and installed them there.  You'll also need to create a local "tmp" directory in the same folder where you deposit the cgi scripts. Afterwards, be sure to set the correct file ownership and permissions:
 ```
@@ -31,15 +31,25 @@ chown -R www-data:www-data .
 cd /var/www/html/Askpi
 chmod +x *.cgi
 ```
-## Usage & Configuration
+## Usage
 1. In order to interact with your assitant, open a web browser on your smart phone (or any other client), and navigate to the URL where you installed askpi.  Screen #1.  
-2. Tap on the text box to enter a message.  A keyboard will appear.  Screen #2.  
-3. Use the keyboard to type a message directly into the text box, or better yet, tap the microphone icon to voice a message using the speech-to-text capabilities built into the phone.  Screen #3.  
-4. After a message is populated in the text box, select whether or not you'd like the assistant to read the response aloud from the Pi's speaker (Announce=Y/N), then click submit.  Screen #4.  
-5. The Pi will process the message based on the instructions you've specified within "assist.dat", and deliver a response.  Screen #5.  
-#1: <img src=https://github.com/glmck13/Askpi/blob/master/docs/screen1.png height=250> #2: <img src=https://github.com/glmck13/Askpi/blob/master/docs/screen2.png height=250> #3: <img src=https://github.com/glmck13/Askpi/blob/master/docs/screen3.png height=250> #4: <img src=https://github.com/glmck13/Askpi/blob/master/docs/screen4.png height=250> #5: <img src=https://github.com/glmck13/Askpi/blob/master/docs/screen5.png height=250>
 
-The "assist.dat" file is structured as a series of "expr" or "grep"-like regular expressions, followed by commands to execute once a regex is matched.  Lines in the file are ignored until a regex is encountered that matches the supplied input text.  Once a matching regex is encountered, all subsequest lines in the file are processed until a line is found that begins with a period ".".  
+2. Tap on the text box to enter a message.  A keyboard will appear.  Screen #2.  
+
+3. Use the keyboard to type a message directly into the text box, or better yet, tap the microphone icon to voice a message using the speech-to-text capabilities built into the phone.  Screen #3.  
+
+4. After a message is populated in the text box, select whether or not you'd like the assistant to read the response aloud from the Pi's speaker (Announce=Y/N), then click submit.  Screen #4.  
+
+5. The Pi will process the message based on the instructions you've specified within "assist.dat", and deliver a response.  Screen #5.  
+
+#1: <img src=https://github.com/glmck13/Askpi/blob/master/docs/screen1.png height=250> #2: <img src=https://github.com/glmck13/Askpi/blob/master/docs/screen2.png height=250> #3: <img src=https://github.com/glmck13/Askpi/blob/master/docs/screen3.png height=250> #4: <img src=https://github.com/glmck13/Askpi/blob/master/docs/screen4.png height=250> #5: <img src=https://github.com/glmck13/Askpi/blob/master/docs/screen5.png height=250>  
+
+A playback widget will appear on the response screen if the assitant generated an audio reply.  The user can use the controls on the playback widget to listen to the reply on their local client.  A written transcript of the audio will also be displayed below the playback widget.  
+
+As I mentioned above, the fact that askpi requires a client device to process speech input is both a drawback and benefit, as compared to other personal assistants like Amazon's Alexa.  One benefit of using a client device, for example, is the ability to integrate additional content (in addition to audio) into a response, making for a richer user experience.  Additional text, images, and even video can be incorporated into a response, which will appear following the audio transcript.
+
+## Configuration
+Input text is processed according to directives specifieid in askpi's "assist.dat" file. The assist.dat file is comprised of a series of "expr" or "grep"-like regular expressions, followed by commands to execute once a regex is matched.  Lines in the file are ignored until a regex is encountered that matches the supplied input text.  Once a matching regex is encountered, all subsequest lines in the file are processed until a line is found that begins with a period ".".  
 
 If a line does **not** start with a special character (more on those below), it is treated as a text string that is passed to the text-to-speech engine for subsequent output.  These lines can incorporate embedded shell commands - using '$( )' syntax - to include dynamic content in the output.   
 
