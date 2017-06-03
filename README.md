@@ -23,7 +23,7 @@ sudo ksh
 apt install gridsite-clients # contains urlencode
 apt install libttspico-utils # contains pico2wave
 ```
-Now that you have the basic server platform installed, copy the supplied .cgi, .dat, and .cfg files somewhere under /var/www/html.  I created an "Askpi" folder, and installed them there.  Afterwards, be sure to set the correct file ownership and permissions:
+Now that you have the basic server platform installed, copy the supplied .cgi, .dat, and .cfg files somewhere under /var/www/html.  I created an "Askpi" folder, and installed them there.  You'll also need to create a local "tmp" directory in the same folder where you deposit the cgi scripts. Afterwards, be sure to set the correct file ownership and permissions:
 ```
 sudo ksh
 cd /var/www
@@ -32,13 +32,14 @@ cd /var/www/html/Askpi
 chmod +x *.cgi
 ```
 ## Usage & Configuration
-In order to interact with your assitant, open a web browser on your smart phone (or any other client), and navigate to the URL where you installed Askpi.  You'll see a screen which looks like this:  
-
+* In order to interact with your assitant, open a web browser on your smart phone (or any other client), and navigate to the URL where you installed askpi.  Screen #1.  
+* Tap on the text box to enter a message.  A keyboard will appear.  Screen #2.  
+* Use the keyboard to type a message directly into the text box, or better yet, tap the microphone icon to voice a message using the speech-to-text capabilities built into the phone.  Screen #3.  
+* After a message is populated in the text box, select whether or not you'd like the assistant to read the response aloud from the Pi's speaker (Announce=Y/N), then click submit.  Screen #4.  
+* The Pi will process the message based on the instructions you've specified within "assist.dat", and deliver a response.  Screen #5.  
 #1: <img src=https://github.com/glmck13/Askpi/blob/master/docs/screen1.png height=250> #2: <img src=https://github.com/glmck13/Askpi/blob/master/docs/screen2.png height=250> #3: <img src=https://github.com/glmck13/Askpi/blob/master/docs/screen3.png height=250> #4: <img src=https://github.com/glmck13/Askpi/blob/master/docs/screen4.png height=250> #5: <img src=https://github.com/glmck13/Askpi/blob/master/docs/screen5.png height=250>
 
-The box is simply a text-input box.  You can choose to type a message directly into this box, or better yet, invoke the STT feature on your smart phone to voice a message.  To accees the speech-to-text capabiltiy on an iPhone, for example, first tap somewhere inside the text box.  At this point a keyboard will appear on your screen which contains a small microphone icon on the bottom:  
-![](/docs/iphone.png)  
-Tap the microphone, and utter some text.  After the text is populated in the text box, click submit.  Now it's time for your Pi to process the message based on the instructions you've specified within "assist.dat".  The "assist.dat" file is structured as a series of "expr" or "grep"-like regular expressions, followed by commands to execute once a regex is matched.  Lines in the file are ignored until a regex is encountered that matches the supplied input text.  Once a matching regex is encountered, all subsequest lines in the file are processed until a line is found that begins with a period ".".  
+The "assist.dat" file is structured as a series of "expr" or "grep"-like regular expressions, followed by commands to execute once a regex is matched.  Lines in the file are ignored until a regex is encountered that matches the supplied input text.  Once a matching regex is encountered, all subsequest lines in the file are processed until a line is found that begins with a period ".".  
 
 If a line does **not** start with a special character (more on those below), it is treated as a text string that is passed to the text-to-speech engine for subsequent output.  These lines can incorporate embedded shell commands - using '$( )' syntax - to include dynamic content in the output.   
 
