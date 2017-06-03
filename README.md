@@ -32,7 +32,7 @@ cd /var/www/html/Askpi
 chmod +x *.cgi
 ```
 ## Usage
-1. In order to interact with your assitant, open a web browser on your smart phone (or any other client), and navigate to the URL where you installed askpi.  Screen #1.  
+1. In order to interact with your assistant, open a web browser on your smart phone (or any other client), and navigate to the URL where you installed askpi.  Screen #1.  
 
 2. Tap on the text box to enter a message.  A keyboard will appear.  Screen #2.  
 
@@ -44,16 +44,16 @@ chmod +x *.cgi
 
 #1: <img src=https://github.com/glmck13/Askpi/blob/master/docs/screen1.png height=250> #2: <img src=https://github.com/glmck13/Askpi/blob/master/docs/screen2.png height=250> #3: <img src=https://github.com/glmck13/Askpi/blob/master/docs/screen3.png height=250> #4: <img src=https://github.com/glmck13/Askpi/blob/master/docs/screen4.png height=250> #5: <img src=https://github.com/glmck13/Askpi/blob/master/docs/screen5.png height=250>  
 
-A playback widget will appear on the response screen if the assitant generated an audio reply.  The user can use the controls on the playback widget to listen to the reply on their local client.  A written transcript of the audio will also be displayed below the playback widget.  
+A playback widget will appear on the response screen if the assistant generated an audio reply.  The user can use the controls on the playback widget to listen to the reply on their local client.  A written transcript of the audio will also be displayed below the playback widget.  
 
 As I mentioned above, the fact that askpi requires a client device to process speech input is both a drawback and benefit, as compared to other personal assistants like Amazon's Alexa.  One benefit of using a client device, for example, is the ability to integrate additional content (in addition to audio) into a response, making for a richer user experience.  Additional text, images, and even video can be incorporated into a response, which will appear following the audio transcript.
 
 ## Configuration
-Input text is processed according to directives specifieid in askpi's "assist.dat" file. The assist.dat file is comprised of a series of "expr" or "grep"-like regular expressions, followed by commands to execute once a regex is matched.  Lines in the file are ignored until a regex is encountered that matches the supplied input text.  Once a matching regex is encountered, all subsequest lines in the file are processed until a line is found that begins with a period ".".  
+Input text is processed according to directives specified in askpi's "assist.dat" file. The assist.dat file is comprised of a series of "expr" or "grep"-like regular expressions, followed by commands to execute once a regex is matched.  Lines in the file are ignored until a regex is encountered that matches the supplied input text.  Once a matching regex is encountered, all subsequent lines in the file are processed until a line is found that begins with a period ".".  
 
 If a line does **not** start with a special character (more on those below), it is treated as a text string that is passed to the text-to-speech engine for subsequent output.  These lines can incorporate embedded shell commands - using '$( )' syntax - to include dynamic content in the output.   
 
-Altermatively, if a line begins with any of the special characters below, it is processed as described in the table:  
+Alternatively, if a line begins with any of the special characters below, it is processed as described in the table:  
 
 | Char | Meaning |
 | --- | --- |
