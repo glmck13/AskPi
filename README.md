@@ -34,7 +34,7 @@ chmod +x *.cgi
 ## Usage & Configuration
 In order to interact with your assitant, open a web browser on your smart phone (or any other client), and navigate to the URL where you installed Askpi.  You'll see a screen which looks like this:  
 
-<img src=https://github.com/glmck13/Askpi/blob/master/docs/screen1.png height=150><img src=https://github.com/glmck13/Askpi/blob/master/docs/screen2.png height=150><img src=https://github.com/glmck13/Askpi/blob/master/docs/screen3.png height=150><img src=https://github.com/glmck13/Askpi/blob/master/docs/screen4.png height=150><img src=https://github.com/glmck13/Askpi/blob/master/docs/screen5.png height=150>
+#1: <img src=https://github.com/glmck13/Askpi/blob/master/docs/screen1.png height=150> #2: <img src=https://github.com/glmck13/Askpi/blob/master/docs/screen2.png height=150> #3: <img src=https://github.com/glmck13/Askpi/blob/master/docs/screen3.png height=150> #4: <img src=https://github.com/glmck13/Askpi/blob/master/docs/screen4.png height=150> #5: <img src=https://github.com/glmck13/Askpi/blob/master/docs/screen5.png height=150>
 
 The box is simply a text-input box.  You can choose to type a message directly into this box, or better yet, invoke the STT feature on your smart phone to voice a message.  To accees the speech-to-text capabiltiy on an iPhone, for example, first tap somewhere inside the text box.  At this point a keyboard will appear on your screen which contains a small microphone icon on the bottom:  
 ![](/docs/iphone.png)  
