@@ -1,20 +1,7 @@
 =.*hello.*
-Hello. My name is pi.  You can ask me things such as, tell me the weather, or what is the time.  How can I help you today?
-.
-
-=.*send.*mail.*
-~:useradd:
-To what address?
-.
-
-+:useradd:.*
-~:mailto:$Speech
-What do you want to say?
-.
-
-+:mailto:.*
-!sendsms.sh "${LastWord#*:}" "Message from Askpi" "$Speech"
-Message sent!
+Hello. My name is pi.
+You can ask me things such as: What is the time?, Tell me the weather, or Get a stock price.
+How can I help you today?
 .
 
 =.*stock.*price.*
@@ -37,7 +24,11 @@ The current forecast: $(curl -s 'https://forecast-v3.weather.gov/point/39.2851,-
 .
 
 =.*mass.*reading.*
-!mpg123 -4 http://ccc.usccb.org/cccradio/NABPodcasts/$(date +"%y_%m_%d").mp3
+!curl -s http://ccc.usccb.org/cccradio/NABPodcasts/$(date +"%y_%m_%d").mp3 >./docs/usccb.mp3
+'<audio controls>
+'<source src="./docs/usccb.mp3" type="audio/mpeg">
+'<audio controls>
+'</audio>
 .
 
 =.*
