@@ -70,4 +70,6 @@ but to do so, I needed a way to preserve the $Speech (or some other context) ent
 Another advantage of using a web browser to interface to the platform is the ability to save cookies, which provide exactly
 what's needed to do this.  By default, askpi populates a browser cookie (called "LastWord") with the current message text,
 so this is available to a follow-on call.  Alternatively, the "LastWord" cookie can be populated with some other string by
-using the '~' character. 
+using the '~' character.  As mentioned in the table above, a line starting with '=' in assist.dat makes a comparison against the
+current text input string, "$Speech", while a line starting with '+' attempts to match against a string containing the
+prior text/context prepended to the current input, i.e. "$LastWord $Speech".
