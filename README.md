@@ -72,4 +72,13 @@ what's needed to do this.  By default, askpi populates a browser cookie (called 
 so this is available to a follow-on call.  Alternatively, the "LastWord" cookie can be populated with some other string by
 using the '~' character.  As mentioned in the table above, a line starting with '=' in assist.dat makes a comparison against the
 current text input string, "$Speech", while a line starting with '+' attempts to match against a string containing the
-prior text/context prepended to the current input, i.e. "$LastWord $Speech".
+prior text/context prepended to the current input, i.e. "$LastWord $Speech".  
+
+As regards the quote character ', this is a handy mechanism to incorporate additional content in the reponse.
+Just as in the case of plain speech directives, you can make use of embedded shell commands - using '$( )' syntax - to
+inject dynamic content. Use html markup tags to embed text, lists, images, and
+[even additional audio and video content using HTML5](https://www.w3schools.com/html/html_media.asp).
+I created a separate "docs" directory under my askpi installation folder to store any custom content I wanted
+to include.  
+
+I hope you find this project both fun & useful.  I'd appreciate any feedback.  Enjoy!
