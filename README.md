@@ -1,4 +1,4 @@
-# Askpi
+# AskPi
 A lightweight personal assistant for your Linux/Raspberry Pi host
 ## Background
 For some time I've wanted to convert my Raspberry Pi into a personal assistant, like Amazon's Alexa, Apple's Siri, etc.  I dabbled with [Amazon's Alexa Skill Kit (ASK)](https://developer.amazon.com/alexa-skills-kit), and [Facebook's WIT](https://wit.ai/), but was frustrated since I had to develop and host my app in their cloud.  Moreover, I wasn't looking to develop a very sophisticated voice command system, just something that could respond to some very basic verbal cues.  
@@ -49,18 +49,25 @@ A playback widget will appear on the response screen if the assistant generated 
 As I mentioned above, the fact that askpi requires a client device to process speech input is both a drawback and benefit, as compared to other personal assistants like Amazon's Alexa.  One benefit of using a client device, for example, is the ability to integrate additional content (in addition to audio) into a response, making for a richer user experience.  Additional text, images, and even video can be incorporated into a response, which will appear following the audio transcript.
 
 ## Configuration
-Input text is processed according to directives specified in askpi's "assist.dat" file. The assist.dat file is comprised of a series of "expr" or "grep"-like regular expressions, followed by commands to execute once a regex is matched.  Lines in the file are ignored until a regex is encountered that matches the supplied input text.  Once a matching regex is encountered, all subsequent lines in the file are processed until a line is found that begins with a period ".".  
+Input text, which is saved in the "$Speech" variable, is processed according to directives specified in askpi's "assist.dat" file. The assist.dat file is comprised of a series of "expr" or "grep"-like regular expressions, followed by commands to execute once a regex is matched.  Lines in the file are ignored until a regex is encountered that matches the supplied input text.  Once a matching regex is encountered, all subsequent lines in the file are processed until a line is found that begins with a period ".".  
 
 If a line does **not** start with a special character (more on those below), it is treated as a text string that is passed to the text-to-speech engine for subsequent output.  These lines can incorporate embedded shell commands - using '$( )' syntax - to include dynamic content in the output.   
 
-Alternatively, if a line begins with any of the special characters below, it is processed as described in the table:  
+Alternatively, if a line begins with any of the special characters below, it is processed as described:  
 
 | Char | Meaning |
 | --- | --- |
-| '#' | Treat line as a comment |
-| '!' | Pass line to shell for execution |
-| '.' | Exit script processing |
-| '=' | Match supplied text against regex pattern |
-| '+' | Match (previous & current) text against regex pattern |
-| '~' | Override last text assignment |
-
+| # | Treat line as a comment |
+| ! | Pass line to shell for execution |
+| ' | Append line (usually html text) to response |
+| . | Exit script processing |
+| = | Match "$Speeh" against regex pattern |
+| + | Match "$LastWord $Speech" against regex pattern |
+| ~ | Set text to be returned in next cgi call |
+  
+Use of '~' and '+' requires some futher explanation... I wanted to implement a simple dialogue capability in the assistant,
+but to do so, I needed a way to preserve the $Speech (or some other context) entered in one cgi script and pass it to the next.
+Another advantage of using a web browser to interface to the platform is the ability to save cookies, which provide exactly
+what's needed to do this.  By default, askpi populates a browser cookie (called "LastWord") with the current message text,
+so this is available to a follow-on call.  Alternatively, the "LastWord" cookie can be populated with some other string by
+using the '~' character. 
