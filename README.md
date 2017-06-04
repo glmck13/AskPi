@@ -65,7 +65,7 @@ Alternatively, if a line begins with any of the special characters below, it is 
 | + | Match "$LastWord $Speech" against regex pattern |
 | ~ | Set text to be returned in next cgi call |
   
-Use of '~' and '~' requires some futher explanation... I wanted to implement a simple dialogue capability in the assistant,
+Use of '~' and '+' requires some futher explanation... I wanted to implement a simple dialogue capability in the assistant,
 but to do so, I needed a way to preserve the $Speech (or some other context) entered in one cgi script and pass it to the next.
 Another advantage of using a web browser to interface to the platform is the ability to save cookies, which provide exactly
 what's needed to do this.  By default, askpi populates a browser cookie (called "LastWord") with the current message text,
