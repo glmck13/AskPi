@@ -61,7 +61,7 @@ Alternatively, if a line begins with any of the special characters below, it is 
 | ! | Pass line to shell for execution |
 | ' | Append line (usually html text) to response |
 | . | Exit script processing |
-| = | Match "$Speeh" against regex pattern |
+| = | Match "$Speech" against regex pattern |
 | + | Match "$LastWord $Speech" against regex pattern |
 | ~ | Set text to be returned in next cgi call |
   
