@@ -47,7 +47,7 @@ if [ "$Speech" ]; then
 			;
 
 		elif [ "$Token" = "~" ]; then
-			lastword=$(eval print "$Pattern")
+			lastword=$(eval print \""$Pattern"\")
 
 		elif [ "$Token" = "!" ]; then
 			eval "$Pattern"
@@ -56,7 +56,7 @@ if [ "$Speech" ]; then
 			break
 
 		elif [ "$Token" = "'" ]; then
-			Html+=$(eval print "$line")
+			Html+=$(eval print \""$Pattern"\")
 
 		else
 			Response+=" "
