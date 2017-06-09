@@ -66,7 +66,7 @@ if [ "$Speech" ]; then
 	done <$DATAFILE
 fi
 
-[ "$Response" ] && pico2wave -l en-GB -w $TMPWAV "<volume level='50'>$Response"
+[ "$Response" ] && pico2wave -l en-US -w $TMPWAV "<volume level='40'>$Response"
 [ "$Announce" = "y" -a -f $TMPWAV ] && aplay $TMPWAV 2>/dev/null
 
 typeset -A AnnounceButton
