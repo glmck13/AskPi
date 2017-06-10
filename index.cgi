@@ -8,8 +8,6 @@ nextwav=$(<$NEXTWAV); (( nextwav = ++nextwav % 10 )); print $nextwav >$NEXTWAV
 
 TMPWAV=./tmp/audio$nextwav.wav; rm -f $TMPWAV
 
-exec 2>&1
-
 typeset -l Speech LastWord Announce
 
 [ "$REQUEST_METHOD" = "POST" ] && read -r QUERY_STRING
