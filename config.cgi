@@ -4,8 +4,6 @@ PATH=$PWD:$PATH
 
 DATAFILE=assist.dat
 
-exec 2>&1
-
 read -r QUERY_STRING
 
 vars="$QUERY_STRING"
