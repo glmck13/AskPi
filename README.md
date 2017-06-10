@@ -65,7 +65,7 @@ Alternatively, if a line begins with any of the special characters below, it is 
 | . | Exit script processing |
 | = | Match "$Speech" against regex pattern |
 | + | Match "$LastWord $Speech" against regex pattern |
-| ~ | Set text to be returned in next cgi call |
+| ~ | Set LastWord text to be returned in next cgi call |
   
 Use of '\~' and '+' requires some futher explanation... I wanted to implement a simple dialogue capability in the assistant,
 but to do so, I needed a way to preserve the $Speech (or some other context) entered in one cgi script and pass it to the next.
