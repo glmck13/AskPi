@@ -1,11 +1,11 @@
 # AskPi
-A lightweight personal assistant for your Linux/Raspberry Pi host  
+A lightweight virtual assistant for your Linux/Raspberry Pi host  
 <img src=https://github.com/glmck13/Askpi/blob/master/docs/Askpi.jpg height=300>  
 
 ## Background
-For some time I've wanted to convert my Raspberry Pi into a personal assistant, like Amazon's Alexa, Apple's Siri, etc.  I dabbled with [Amazon's Alexa Skill Kit (ASK)](https://developer.amazon.com/alexa-skills-kit), and [Facebook's WIT](https://wit.ai/), but was frustrated since I had to develop and host my app in their cloud.  Moreover, I wasn't looking to develop a very sophisticated voice command system, just something that could respond to some very basic verbal cues.  
+For some time I've wanted to convert my Raspberry Pi into a virtual assistant, like Amazon's Alexa, Apple's Siri, etc.  I dabbled with [Amazon's Alexa Skill Kit (ASK)](https://developer.amazon.com/alexa-skills-kit), and [Facebook's WIT](https://wit.ai/), but was frustrated since I had to develop and host my app in their cloud.  Moreover, I wasn't looking to develop a very sophisticated voice command system, just something that could respond to some very basic verbal cues.  
 
-In essence, a personal assistant is composed of three components:
+In essence, a virtal assistant is composed of three components:
 1. a speech-to-text (STT) voice recognition service
 2. a command processing engine
 3. a text-to-speech (TTS) utility
