@@ -4,7 +4,7 @@ A lightweight virtual assistant for your Linux/Raspberry Pi host
 ## Update: July 4th, 2017
 When I first published this project, I decided to forego speech recognition on the Pi, and just focus on the backend processing engine.  But I couldn't shake the urge to add a voice processing component, so I finally took the plunge, and just tackled that part as well.  
 
-The design is pretty simple.  I implement a very basic client that records user speech, translates this to text (using Google's API), then submits the translated text to the CGI backend I had built previously.  The client then post-processes URLs retuned from the CGI app, and outputs these on the Pi using the appropriate video/audio player.  
+The design is pretty simple.  I implement a very basic client that records user speech, translates this to text (using Google's API), then submits the translated text to the CGI backend I had built in phase one.  The client then post-processes URLs retuned from the CGI app, and outputs these on the Pi using the appropriate video/audio player.  
 
 But there's one problem I needed to solve: when should the Pi listen for user input?  At first I experimented with [pocketsphinx_continuous](https://cmusphinx.github.io/) - a copy of which is already included in the Raspian distribution - with the intent of recognizing a set of verbal cues that might be used to initiate a transation with the Pi (just like Captain Kirk addresses the ship's computer as "Computer" on Star Trek).  While this worked much of the time, the pocketsphinx engine was still prone to make translation errors, especially in noisy environments.   
 ## Background
