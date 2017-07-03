@@ -4,7 +4,7 @@ PATH=$PWD:$PATH
 
 NEXTWAV=nextwav.cfg DATAFILE=assist.dat
 
-nextwav=$(<$NEXTWAV); (( nextwav = ++nextwav % 10 )); print $nextwav >$NEXTWAV
+nextwav=$(<$NEXTWAV); (( nextwav = ++nextwav % 25 )); print $nextwav >$NEXTWAV
 
 TMPWAV=./tmp/audio$nextwav.wav; rm -f $TMPWAV
 
@@ -20,7 +20,7 @@ do
 	[ "$v" ] && export $v
 done
 
-LastWord=$(urlencode -d "$LastWord") lastword=""
+LastWord=$(urlencode -d "$LastWord") lastword="nil"
 Speech=$(urlencode -d "$Speech")
 Response=""
 Html=""
@@ -64,16 +64,16 @@ if [ "$Speech" ]; then
 	done <$DATAFILE
 fi
 
-[ "$Response" ] && pico2wave -l en-US -w $TMPWAV "<volume level='40'>$Response"
+[ "$Response" ] && pico2wave -l en-US -w $TMPWAV "<volume level='60'>$Response"
 [ "$Announce" = "y" -a -f $TMPWAV ] && aplay $TMPWAV 2>/dev/null
 
 typeset -A AnnounceButton
 AnnounceButton["y"]="" AnnounceButton["n"]=""
-AnnounceButton[${Announce:-n}]="checked"
+AnnounceButton[${Announce:-y}]="checked"
 
 cat - <<EOF
 Content-type: text/html
-Set-Cookie: LastWord=$(urlencode "${lastword:-$Speech}")
+Set-Cookie: LastWord=$(urlencode "$lastword")
 
 <html>
 <head>

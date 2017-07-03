@@ -1,37 +1,77 @@
-=.*hello.*
-Hello. My name is pi.
-You can ask me things such as: What is the time?, Tell me the weather, or Get a stock price.
-How can I help you today?
+#
+# News briefing (Reuters)
+#
+=.*news
+=.*brief
+$(reuters.sh)
 .
 
-=.*stock.*price.*
+#
+# Long news (AP)
+#
+=.*press
+$(apnews.sh)
+.
+
+#
+# Daily mass readings
+#
+=.*mass
+=.*reading
+Downloading $(date +"%B %d")
+'<audio controls>
+'<source src="http://ccc.usccb.org/cccradio/NABPodcasts/$(date +\"%y_%m_%d\").mp3" controls>
+'</audio>
+.
+
+#
+# Youtube: "One Day More"
+#
+=.*one.*day.*more
+Here is the youtube video you requested:
+'<a href="https://www.youtube.com/watch?v=Cn8PiqIXEjQ" >One Day More</a>
+.
+
+#
+# Duke Genesis
+#
+=.*music
+=.*duke
+Here is the youtube video you requested:
+'<a href="https://www.youtube.com/watch?v=4j2h5i7CNVw" >Duke (Genesis)</a>
+.
+
+#
+# Look up stock price
+#
+=.*stock.*price
 What stock ticker are you interested in?
 ~:ticker:
 .
 
-+:ticker:.*
++:ticker:
 The current ${Speech} stock price is $(curl -s "http://finance.google.com/finance/info?client=ig&q=${Speech}" | grep -m1 cur | sed -e "s/.*://")
 .
 
-=.*date.*
-=.*time.*
+#
+# What day/time is it?
+#
+=.*date
+=.*time
 Today is $(date +"%A %B %d %Y").
 The time is $(date +"%r").
 .
 
-=.*weather.*
+#
+# What is the weather forecast?
+#
+=.*weather
+=.*forecast
 The current forecast: $(curl -s 'https://forecast-v3.weather.gov/point/39.2851,-76.8147?view=plain&mode=min' | grep -m1 -A1 forecast-label | sed -e "s/<[^>]*>/ /g")
 .
 
-=.*mass.*reading.*
-!curl -s http://ccc.usccb.org/cccradio/NABPodcasts/$(date +"%y_%m_%d").mp3 >./docs/usccb.mp3
-'<audio controls>
-'<source src="./docs/usccb.mp3" type="audio/mpeg">
-'<audio controls>
-'</audio>
-.
-
 =.*
-You said: $Speech. I do not understand that.
+You said: $Speech.
+I do not understand that
 .
 
