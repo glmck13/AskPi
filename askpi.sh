@@ -12,27 +12,30 @@ exec <>$FIFO
 
 while true
 do
-	read command <$FIFO
+	read cmd <$FIFO
 
-	case $command in
+	case "$cmd" in
 
 	CONNECT*)
-		#play -n synth 0.5 sine 941 sine 1477 remix - 2>/dev/null
+		# DTMF
+		# play -n -r 16k synth 0.5 sine 941 sine 1477 remix - 2>/dev/null
 		;;
 
 	DISCONNECT*)
-		#play -n synth 0.5 sine 480 sine 620 sine 480 sine 620 sine 480 sine 620 delay 0 0 1 1 2 2 remix - 2>/dev/null
+		# Busy signal
+		# play -n -r 16k synth 0.5 sine 480 sine 620 sine 480 sine 620 sine 480 sine 620 delay 0 0 1 1 2 2 remix - 2>/dev/null
 		;;
 
 	BATTERY*)
-		#print $command | read x device level
-		#espeak "$device battery level $level"
+		Banner="${cmd#* }"
 		;;
 
 	LISTEN*)
 		while true
 		do
-			play -n -r 16k synth 1 sine 350 sine 440 remix - 2>/dev/null
+			# Dial tone
+			# play -n -r 16k synth 1 sine 350 sine 440 remix - 2>/dev/null
+			play -n -r 16k synth 0.5 sine 480 sine 620 remix - 2>/dev/null
 
 			# rec -r 16k -c 1 $SPEECH noiseprof noise
 			# timeout 3s rec -r 16k -c 1 $SPEECH noisered noise vol 5 2>/dev/null
@@ -55,7 +58,8 @@ do
 
 			Speech=$(grep -m1 '"transcript"' $JSONRSP | sed -e 's/ *"[^"]*" *: *"\([^"]*\)".*/\1/')
 
-			curl -s --data-urlencode "Speech=$Speech" http://localhost -b cookies.txt -c cookies.txt |
+			curl -s --data-urlencode "Speech=$Speech" --data "Banner=$Banner" \
+				http://localhost -b $COOKIES -c $COOKIES |
 				grep -E "src|href" | sed -e "s/src=/url=/" -e "s/href=/url=/" \
 				-e "s/.*url=\([^ ]*\).*/\1/" -e 's/"//g' | while read url
 			do
@@ -87,7 +91,7 @@ do
 				esac
 			done
 
-			lastword=$(grep LastWord cookies.txt) lastword=${lastword#*LastWord?}
+			lastword=$(grep LastWord $COOKIES) lastword=${lastword#*LastWord?}
 
 			[ ! "$lastword" -o "$lastword" = "nil" ] && break
 		done

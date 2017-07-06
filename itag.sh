@@ -48,7 +48,7 @@ do
 	elif [[ $x == *handle:\ 0x0030* ]]; then
 		print ${x##*:} | read lo x
 		b=16#${lo}
-		print "BATTERY $Device $b%" >$FIFO
+		print "BATTERY $Device:$b" >$FIFO
 
 	elif [[ $x == *Notification\ handle\ =\ 0x0035\ value:\ 01* ]]; then
 		print "LISTEN $Device" >$FIFO
