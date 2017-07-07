@@ -1,12 +1,12 @@
 # AskPi
 A lightweight virtual assistant for your Linux/Raspberry Pi host  
-<img src=https://github.com/glmck13/Askpi/blob/master/docs/Askpi.jpg height=300>  
+<img src=https://github.com/glmck13/Askpi/blob/master/docs/architecture.png>  
 ## Update: July 4th, 2017
 When I first published this project, I decided to forego speech recognition on the Pi, and just focus on the backend processing engine.  But I couldn't shake the urge to add a voice processing component, so I finally took the plunge, and just tackled that part as well.  
 
 The design is pretty simple.  I implement a very basic client that records user speech, translates this to text (using Google's API), then submits the translated text to the CGI backend I had built in phase one.  The client then post-processes URLs retuned from the CGI app, and outputs these on the Pi using the appropriate video/audio player.  
 
-But there's one problem I needed to solve: when should the Pi listen for user input?  At first I experimented with [pocketsphinx_continuous](https://cmusphinx.github.io/) - a copy of which is already included in the Raspian distribution - with the intent of recognizing a set of verbal cues that might be used to initiate a transation with the Pi (just like Captain Kirk addresses the ship's computer as "Computer" on Star Trek).  While this worked much of the time, the pocketsphinx engine was still prone to make translation errors, especially in noisy environments.   
+But there's one problem I needed to solve: when should the Pi listen for user input?  At first I experimented with [pocketsphinx_continuous](https://cmusphinx.github.io/) - a copy of which is already included in the Raspian distribution - with the intent of recognizing a set of verbal cues that might be used to initiate a transaction with the Pi (just like Captain Kirk addresses the ship's computer as "Computer" on Star Trek).  While this worked much of the time, the pocketsphinx engine was still prone to make translation errors, especially in noisy environments.   
 ## Background
 For some time I've wanted to convert my Raspberry Pi into a virtual assistant, like Amazon's Alexa, Apple's Siri, etc.  I dabbled with [Amazon's Alexa Skill Kit (ASK)](https://developer.amazon.com/alexa-skills-kit), [Facebook's WIT](https://wit.ai/), and [Recast.ai](https://recast.ai) but was frustrated since I had to develop and host my app in their cloud.  Moreover, I wasn't looking to develop a very sophisticated voice command system, just something that could respond to some very basic verbal cues.  
 
