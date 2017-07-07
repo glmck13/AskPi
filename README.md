@@ -9,7 +9,7 @@ The design is pretty simple.  I implement a very basic client that records user 
 
 But there's one problem I needed to solve: when should the Pi listen for user input?  At first I experimented with [pocketsphinx_continuous](https://cmusphinx.github.io/) - a copy of which is already included in the Raspian distribution - with the intent of recognizing a set of verbal cues that might be used to initiate a transaction with the Pi (just like Captain Kirk addresses the ship's computer as "Computer" on Star Trek).  While this worked much of the time, the pocketsphinx engine was still prone to make translation errors, especially in noisy environments.  
 
-My answer?  A little gadget I used in my [MyVitals](../../../MyVitals) project: the ITAG.  The ITAG is essentially a wireless button that connects to the Pi over the Bluetooth (low energy) interface.  So in order for a user to "talk" to the Pi, they must first press the button on the ITAG.  The Pi will respond with a short "beep" that signals to the user to talk into the microphone.  The Pi then records a few seconds of user speech, and submits this to Google's speech-to-text platform to render a translation.  
+My answer?  A little gadget I used in my [MyVitals](../../../MyVitals) project: the ITAG.  The ITAG is essentially a wireless button that connects to the Pi over its Bluetooth (low energy) interface.  So in order for a user to "talk" to the Pi, they must first press the button on the ITAG.  The Pi will respond with a short "beep" that signals to the user to talk into the microphone.  The Pi then records a few seconds of user speech, and submits this to Google's speech-to-text platform to render a translation.  
 
 ## Background
 For some time I've wanted to convert my Raspberry Pi into a virtual assistant, like Amazon's Alexa, Apple's Siri, etc.  I dabbled with [Amazon's Alexa Skill Kit (ASK)](https://developer.amazon.com/alexa-skills-kit), [Facebook's WIT](https://wit.ai/), and [Recast.ai](https://recast.ai) but was frustrated since I had to develop and host my app in their cloud.  Moreover, I wasn't looking to develop a very sophisticated voice command system, just something that could respond to some very basic verbal cues.  
@@ -28,13 +28,13 @@ So if I need a mobile phone, how is this any different from just using the voice
 Enough background, let's talk about how to install and configure the solution.
 
 ## Installation
-Start with a default raspbian build for the Pi, and follow the [installation instructions on the "MyVitals" wiki](../../../MyVitals/wiki/1-Install) to configure a web server & sound support.  Don't bother with any of the Bluetooth setup, since that won't be needed for this project.  You'll also need to install a few more packages:
+Start with a default raspbian build for the Pi, and follow the [installation instructions on the "MyVitals" wiki](../../../MyVitals/wiki/1-Install) to configure a web server, bluetooth, and sound support.  In addition, you'll also need to install a few more packages:
 ```
 sudo ksh
 apt install gridsite-clients # contains urlencode utility
 apt install libttspico-utils # contains pico2wave text-to-speech engine
 ```
-Now that you have the basic server platform installed, copy the supplied .cgi, .dat, and .cfg files somewhere under /var/www/html.  I created an "Askpi" folder, and installed them there.  You'll also need to create a local "tmp" directory in the same folder where you deposit the cgi scripts. Afterwards, be sure to set the correct file ownership and permissions:
+Now that you have the basic server platform installed, copy the supplied .sh, .cgi, .dat, and .cfg files somewhere under /var/www/html.  I created an "Askpi" folder, and installed them there.  You'll also need to create a local "tmp" directory in the same folder where you deposit the cgi scripts. Afterwards, be sure to set the correct file ownership and permissions:
 ```
 sudo ksh
 cd /var/www
