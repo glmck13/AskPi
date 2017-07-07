@@ -1,12 +1,16 @@
 # AskPi
 A lightweight virtual assistant for your Linux/Raspberry Pi host  
 <img src=https://github.com/glmck13/Askpi/blob/master/docs/architecture.png>  
+
 ## Update: July 4th, 2017
-When I first published this project, I decided to forego speech recognition on the Pi, and just focus on the backend processing engine.  But I couldn't shake the urge to add a voice processing component, so I finally took the plunge, and just tackled that part as well.  
+When I first published this project, I decided to forego speech recognition on the Pi, and just focus on the backend processing engine.  But I couldn't shake the urge to add a voice processing component, so I finally took the plunge, and recently tackled that part as well.  
 
 The design is pretty simple.  I implement a very basic client that records user speech, translates this to text (using Google's API), then submits the translated text to the CGI backend I had built in phase one.  The client then post-processes URLs retuned from the CGI app, and outputs these on the Pi using the appropriate video/audio player.  
 
-But there's one problem I needed to solve: when should the Pi listen for user input?  At first I experimented with [pocketsphinx_continuous](https://cmusphinx.github.io/) - a copy of which is already included in the Raspian distribution - with the intent of recognizing a set of verbal cues that might be used to initiate a transaction with the Pi (just like Captain Kirk addresses the ship's computer as "Computer" on Star Trek).  While this worked much of the time, the pocketsphinx engine was still prone to make translation errors, especially in noisy environments.   
+But there's one problem I needed to solve: when should the Pi listen for user input?  At first I experimented with [pocketsphinx_continuous](https://cmusphinx.github.io/) - a copy of which is already included in the Raspian distribution - with the intent of recognizing a set of verbal cues that might be used to initiate a transaction with the Pi (just like Captain Kirk addresses the ship's computer as "Computer" on Star Trek).  While this worked much of the time, the pocketsphinx engine was still prone to make translation errors, especially in noisy environments.  
+
+My answer?  A little gadget I used in my [MyVitals](../../../MyVitals) project: the ITAG.  The ITAG is essentially a wireless button that connects to the Pi over the Bluetooth (low energy) interface.  So in order for a user to "talk" to the Pi, they must first press the button on the ITAG.  The Pi will respond with a short "beep" that signals to the user to talk into the microphone.  The Pi then records a few seconds of user speech, and submits this to Google's speech-to-text platform to render a translation.  
+
 ## Background
 For some time I've wanted to convert my Raspberry Pi into a virtual assistant, like Amazon's Alexa, Apple's Siri, etc.  I dabbled with [Amazon's Alexa Skill Kit (ASK)](https://developer.amazon.com/alexa-skills-kit), [Facebook's WIT](https://wit.ai/), and [Recast.ai](https://recast.ai) but was frustrated since I had to develop and host my app in their cloud.  Moreover, I wasn't looking to develop a very sophisticated voice command system, just something that could respond to some very basic verbal cues.  
 
@@ -24,7 +28,7 @@ So if I need a mobile phone, how is this any different from just using the voice
 Enough background, let's talk about how to install and configure the solution.
 
 ## Installation
-Start with a default raspbian build for the Pi, and follow the [installation instructions on the "MyVitals" wiki](https://github.com/glmck13/MyVitals/wiki/1-Install) to configure a web server & sound support.  Don't bother with any of the Bluetooth setup, since that won't be needed for this project.  You'll also need to install a few more packages:
+Start with a default raspbian build for the Pi, and follow the [installation instructions on the "MyVitals" wiki](../../../MyVitals/wiki/1-Install) to configure a web server & sound support.  Don't bother with any of the Bluetooth setup, since that won't be needed for this project.  You'll also need to install a few more packages:
 ```
 sudo ksh
 apt install gridsite-clients # contains urlencode utility
