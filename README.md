@@ -1,6 +1,6 @@
 # AskPi
 A lightweight virtual assistant for your Linux/Raspberry Pi host  
-<div style="text-align:center"><img src=https://github.com/glmck13/Askpi/blob/master/docs/architecture.png></div>  
+<img src=https://github.com/glmck13/Askpi/blob/master/docs/architecture.png>  
 ## Update: July 4th, 2017
 When I first published this project, I decided to forego speech recognition on the Pi, and just focus on the backend processing engine.  But I couldn't shake the urge to add a voice processing component, so I finally took the plunge, and just tackled that part as well.  
 
