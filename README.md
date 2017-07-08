@@ -31,10 +31,14 @@ Enough background, let's talk about how to install and configure the solution.
 Start with a default raspbian build for the Pi, and follow the [installation instructions on the "MyVitals" wiki](../../../MyVitals/wiki/1-Install) to configure a web server, bluetooth, and sound support.  It seems that "gatttool" is no longer built by default when compiling the BlueZ package, so you may need to add both "--enable-deprecated" and "--enable-experimental" when running the initial "configure" script.  Go ahead and install the following packages as well:  
 ```
 sudo ksh
-apt install gridsite-clients # contains urlencode utility
-apt install libttspico-utils # contains pico2wave text-to-speech engine
+apt install gridsite-clients # urlencode
+apt install libttspico-utils # pico2wave text-to-speech engine
+apt install sox # rec & play, and synthesized sound
+apt install mpg123 # mp3 player
 ```
 Before omxplayer can play YouTube videos on the Pi, I found that YouTube URLs need to be pre-processed to extract the actual audio/video feeds.  The "youtube-dl" python script seems to do a good job with this.  You can download the latest version here: https://rg3.github.io/youtube-dl/download.html.  
+
+I stublmed upon a few other annoyances when trying to play sound & video files on the Pi.  First, recordings would sometimes play in rapid fire.  I don't know whether this behavior can be attributed to using the Plubable USB interface or not.  Regardless, I found that adding "-o alsa:plughw:Device" to omxplayer effectively eliminated the problem.  Similarly, when generating synthetic souds using sox, it would help to specify a sample rate of 16K, i.e. "play -n -r 16k synth ..."   
 
 Now that you have the basic server platform installed, copy the supplied .sh, .cgi, .dat, and .cfg files somewhere under /var/www/html.  I created an "Askpi" folder, and installed them there.  You'll also need to create a local "tmp" directory in the same folder where you deposit the cgi scripts. Afterwards, be sure to set the correct file ownership and permissions:
 ```
