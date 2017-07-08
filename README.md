@@ -47,8 +47,10 @@ cd /var/www
 chown -R www-data:www-data .
 cd /var/www/html/Askpi
 chmod +x *.cgi
-```
-## Use
+```  
+## Use Case: Connecting with a microphone & speaker
+
+## Use Case: Connecting with a smart phone
 1. In order to interact with your assistant, open a web browser on your smart phone (or any other client), and navigate to the URL where you installed askpi.  Screen #1.  
 
 2. Tap on the text box to enter a message.  A keyboard will appear.  Screen #2.  
