@@ -5,7 +5,7 @@ A lightweight virtual assistant for your Linux/Raspberry Pi host
 ## Update: July 4th, 2017
 When I first published this project, I decided to forego speech recognition on the Pi, and just focus on the backend processing engine.  But I couldn't shake the urge to add a voice processing component, so I finally took the plunge, and recently tackled that part as well.  
 
-The design is pretty simple.  I implement a very basic client that records user speech, translates this to text (using Google's API), then submits the translated text to the CGI backend I had built in phase one.  The client then post-processes URLs retuned from the CGI app, and outputs these on the Pi using the appropriate video/audio player.  
+The design is pretty simple.  I implement a very basic client that records user speech, translates this to text (using Google's API), then submits the translated text to the CGI backend I had built in phase one.  The client then post-processes URLs returned from the CGI app, and outputs these on the Pi using the appropriate video/audio player.  
 
 But there's one problem I needed to solve: when should the Pi listen for user input?  At first I experimented with [pocketsphinx_continuous](https://cmusphinx.github.io/) - a copy of which is already included in the Raspian distribution - with the intent of recognizing a set of verbal cues that might be used to initiate a transaction with the Pi (just like Captain Kirk addresses the ship's computer as "Computer" on Star Trek).  While this worked much of the time, the pocketsphinx engine was still prone to make translation errors, especially in noisy environments.  
 
@@ -38,7 +38,7 @@ apt install mpg123 # mp3 player
 ```
 Before omxplayer can play YouTube videos on the Pi, I found that YouTube URLs need to be pre-processed to extract the actual audio/video feeds.  The "youtube-dl" python script seems to do a good job with this.  You can download the latest version here: https://rg3.github.io/youtube-dl/download.html.  
 
-I stublmed upon a few other annoyances when trying to play sound & video files on the Pi.  First, recordings would sometimes play in rapid fire.  I don't know whether this behavior can be attributed to using the Plubable USB interface or not.  Regardless, I found that adding "-o alsa:plughw:Device" to omxplayer effectively eliminated the problem.  Similarly, when generating synthetic souds using sox, it would help to specify a sample rate of 16K, i.e. "play -n -r 16k synth ..."   
+I stumbled upon a few other annoyances when trying to play sound & video files on the Pi.  First, recordings would sometimes play in rapid fire.  I don't know whether this behavior can be attributed to using the Plugable USB interface or not.  Regardless, I found that adding "-o alsa:plughw:Device" to omxplayer effectively eliminated the problem.  Similarly, when generating synthetic souds using sox, it would help to specify a sample rate of 16K, i.e. "play -n -r 16k synth ..."   
 
 Now that you have the basic server platform installed, copy the supplied .sh, .cgi, .dat, and .cfg files somewhere under /var/www/html.  I created an "Askpi" folder, and installed them there.  You'll also need to create a local "tmp" directory in the same folder where you deposit the cgi scripts. Afterwards, be sure to set the correct file ownership and permissions:
 ```
