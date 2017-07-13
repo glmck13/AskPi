@@ -1,7 +1,7 @@
 #!/bin/ksh
 
 PATH=$PWD:$PATH
-APIKEY="AIzaSyDL65MRsUutidx-n0_mog_7ZaWqbji7Ow8"
+APIKEY=""
 FIFO=askpi.fifo
 COOKIES=./tmp/cookies.txt; >$COOKIES
 SPEECH=./tmp/google.wav
