@@ -2,6 +2,7 @@
 
 PATH=$PWD:$PATH
 
+BROWSER=chromium-browser
 ASKPI=http://localhost
 FIFO=askpi.fifo
 VOICE=$(mktemp -t askpi-voice.XXXXXX)
@@ -70,7 +71,7 @@ do
 					;;
 
 				*)
-					firefox "$url"
+					DISPLAY=:0 $BROWSER "$url" &
 					;;
 				esac
 
