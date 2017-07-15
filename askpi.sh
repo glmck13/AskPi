@@ -1,12 +1,15 @@
 #!/bin/ksh
 
 PATH=$PWD:$PATH
-APIKEY=""
+
+ASKPI=http://localhost
 FIFO=askpi.fifo
-COOKIES=./tmp/cookies.txt; >$COOKIES
-SPEECH=./tmp/google.wav
-JSONREQ=./tmp/google.txt
-JSONRSP=./tmp/google.log
+VOICE=$(mktemp -t askpi-voice.XXXXXX)
+COOKIES=$(mktemp -t askpi-cookies.XXXXXX); >$COOKIES
+
+trap "rm -f $VOICE $COOKIES; exit" INT HUP QUIT EXIT
+
+. credentials.conf
 
 exec <>$FIFO
 
@@ -17,13 +20,9 @@ do
 	case "$cmd" in
 
 	CONNECT*)
-		# DTMF
-		# play -n -r 16k synth 0.5 sine 941 sine 1477 remix - 2>/dev/null
 		;;
 
 	DISCONNECT*)
-		# Busy signal
-		# play -n -r 16k synth 0.5 sine 480 sine 620 sine 480 sine 620 sine 480 sine 620 delay 0 0 1 1 2 2 remix - 2>/dev/null
 		;;
 
 	BATTERY*)
@@ -33,39 +32,24 @@ do
 	LISTEN*)
 		while true
 		do
-			# Dial tone
-			# play -n -r 16k synth 1 sine 350 sine 440 remix - 2>/dev/null
 			play -n -r 16k synth 0.5 sine 480 sine 620 remix - 2>/dev/null
 
-			# rec -r 16k -c 1 $SPEECH noiseprof noise
-			# timeout 3s rec -r 16k -c 1 $SPEECH noisered noise vol 5 2>/dev/null
-			timeout 3s rec -r 16k -c 1 $SPEECH vol 5 2>/dev/null
-			# [ "$?" -eq 124 ] && break
+			timeout 3s rec -r 16k -c 1 -t wav $VOICE vol 5 2>/dev/null
+			Speech=$(google-stt.sh <$VOICE)
 
-			cat - >$JSONREQ <<-EOF
-			{
-				"config": {
-					"languageCode": "en-US"
-				},
-				"audio": {
-					"content":"$(base64 $SPEECH -w 0)"
-				}
-			}
-			EOF
-
-			curl -s -X POST -H "Content-Type: application/json" --data-binary @$JSONREQ \
-				"https://speech.googleapis.com/v1/speech:recognize?key=${APIKEY}" >$JSONRSP
-
-			Speech=$(grep -m1 '"transcript"' $JSONRSP | sed -e 's/ *"[^"]*" *: *"\([^"]*\)".*/\1/')
-
-			curl -s --data-urlencode "Speech=$Speech" --data "Banner=$Banner" \
-				http://localhost -b $COOKIES -c $COOKIES |
-				grep -E "src|href" | sed -e "s/src=/url=/" -e "s/href=/url=/" \
-				-e "s/.*url=\([^ ]*\).*/\1/" -e 's/"//g' | while read url
+			curl -s --data-urlencode "Speech=$Speech" \
+				--data "Banner=$Banner" \
+				--data "Announce=t" \
+				$ASKPI -b $COOKIES -c $COOKIES | while read html
 			do
+				if [[ "$html" == @(*src=*|*href=*) ]]; then
+
+				url=$(print "$html" | sed -e "s/src=/url=/" -e "s/href=/url=/" \
+					-e "s/.*url=\([^ ]*\).*/\1/" -e 's/"//g')
+
 				url=${url#/}
 
-				[[ "$url" == http:* || "$url" == https:* ]] || url="http://localhost/${url}"
+				[[ "$url" == http:* || "$url" == https:* ]] || url="$ASKPI/${url}"
 
 				case "$url" in
 
@@ -89,6 +73,15 @@ do
 					firefox "$url"
 					;;
 				esac
+
+				elif [[ "$html" == \<p\>*\<?p\> ]]; then
+
+				html=${html#<p>} html=${html%</p>}
+
+				print "$html" | grep -o -E '[^\.]*.' | split -l5 --filter=aws-polly.sh |
+					mpg123 - 2>/dev/null
+
+				fi
 			done
 
 			lastword=$(grep LastWord $COOKIES) lastword=${lastword#*LastWord?}
@@ -98,3 +91,5 @@ do
 		;;
 	esac
 done
+
+rm -f $COOKIES $VOICE

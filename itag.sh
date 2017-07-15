@@ -1,6 +1,7 @@
 #!/bin/ksh
 
 PATH=$PWD:$PATH
+
 ITAGOPTS=C3:25:A5:FA:58:FC
 FIFO=askpi.fifo
 

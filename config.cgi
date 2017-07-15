@@ -27,11 +27,13 @@ case "$Command" in
 
 	Stop*)
 		kill -HUP -1
+		ExecCmd="ps -fu $(id -nu)"
 		;;
 
 	Start*)
 		itag.sh >/dev/null 2>&1 &
 		askpi.sh >/dev/null 2>&1 &
+		ExecCmd="ps -fu $(id -nu)"
 		;;
 esac
 
@@ -55,6 +57,9 @@ $([ -f "$Configfile" ] && cat $Configfile)
 <input type="submit" name="Command" value="Stop Voice Service" />
 <input type="submit" name="Command" value="Start Voice Service" />
 </form>
+<pre>
+$([ "$ExecCmd" ] && $ExecCmd)
+</pre>
 
 </html>
 EOF
