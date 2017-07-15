@@ -2,7 +2,7 @@
 
 PATH=$PWD:$PATH
 
-NEXTWAV=nextwav.cfg DATAFILE=assist.dat
+NEXTWAV=nextwav.conf DATAFILE=assist.dat
 
 nextwav=$(<$NEXTWAV); (( nextwav = ++nextwav % 25 )); print $nextwav >$NEXTWAV
 
