@@ -43,7 +43,7 @@ Before omxplayer can play YouTube videos on the Pi, I found that YouTube URLs ne
 
 I stumbled upon a few other annoyances when trying to play sound & video files on the Pi.  First, recordings would sometimes play in rapid fire.  I don't know whether this behavior can be attributed to using the Plugable USB interface or not.  Regardless, I found that adding "-o alsa:plughw:Device" to omxplayer effectively eliminated the problem.  Similarly, when generating synthetic souds using sox, it would help to specify a sample rate of 16K, i.e. "play -n -r 16k synth ..."   
 
-Now that you have the basic server platform installed, copy the supplied .sh, .cgi, .dat, and .cfg files somewhere under /var/www/html.  I created an "Askpi" folder, and installed them there.  You'll also need to create a local "tmp" directory in the same folder where you deposit the cgi scripts. Afterwards, be sure to set the correct file ownership and permissions:
+Now that you have the basic server platform installed, copy the supplied .sh, .cgi, .dat, and .conf files somewhere under /var/www/html.  I created an "Askpi" folder, and installed them there.  You'll also need to create a local "tmp" directory in the same folder where you deposit the cgi scripts. Afterwards, be sure to set the correct file ownership and permissions:
 ```
 sudo ksh
 cd /var/www
@@ -57,8 +57,6 @@ As mentioned above, the askpi.sh client uses [Google's cloud for speech-to-text 
 I use the "curl" command to invoke the APIs for these services directly, so there's no need to install/configure any additional SDKs on your Pi.  The google-stt.sh and aws-polly.sh scripts are written as classic UNIX filters:
 * google-stt.sh reads a wav-formatted file fron stdin (mono, 16k sampling rate), and outputs a plain text translation to stdout
 * aws-polly.sh reads plain text fronm stdin, and outputs an mp3-formatted audio stream to stdout  
-
-## Use Case: Connecting with a microphone & speaker
 
 ## Use Case: Connecting with a smart phone
 1. In order to interact with your assistant, open a web browser on your smart phone (or any other client), and navigate to the URL where you installed askpi.  Screen #1.  
@@ -77,7 +75,10 @@ A playback widget will appear on the response screen if the assistant generated 
 
 As I mentioned above, the fact that askpi requires a client device to process speech input is both a drawback and benefit, as compared to other personal assistants like Amazon's Alexa.  One benefit of using a client device, for example, is the ability to integrate additional content (in addition to audio) into a response, making for a richer user experience.  Additional text, images, and even video can be incorporated into a response, which will appear following the audio transcript.
 
-## Configuration
+## Use case: Connecting with a microphone & speaker
+In addition to interacting with the assitant using a smart phone, you can also do so using native audio I/O on the Pi.  The config.cgi script includes buttons at the bottom of the page to start/stop the askpi.sh voice client.  While the client is running, press the button on the ITAG, wait for a short beep, then speak a command into the microphone.  The system will submit the voice snippet to Google speech, submit the translated text to the local assitant, then process the output from the assitant using the appropriate audio/video players on the Pi.  Any text returned by the assitant will be spoken alond on the speaker after being processed through Amazon Polly.  
+
+## Configuration: Populating "assist.dat"
 Input text, which is saved in the "$Speech" variable, is processed according to directives specified in askpi's "assist.dat" file. The assist.dat file is comprised of a series of "expr" or "grep"-like regular expressions, followed by commands to execute once a regex is matched.  Lines in the file are ignored until a regex is encountered that matches the supplied input text.  Once a matching regex is encountered, all subsequent lines in the file are processed until a line is found that begins with a period ".".  
 
 If a line does **not** start with a special character (more on those below), it is treated as a text string that is passed to the text-to-speech engine for subsequent output.  These lines can incorporate embedded shell commands - using '$( )' syntax - to include dynamic content in the output.   
