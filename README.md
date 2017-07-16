@@ -43,14 +43,16 @@ Before omxplayer can play YouTube videos on the Pi, I found that YouTube URLs ne
 
 I stumbled upon a few other annoyances when trying to play sound & video files on the Pi.  First, recordings would sometimes play in rapid fire.  I don't know whether this behavior can be attributed to using the Plugable USB interface or not.  Regardless, I found that adding "-o alsa:plughw:Device" to omxplayer effectively eliminated the problem.  Similarly, when generating synthetic souds using sox, it would help to specify a sample rate of 16K, i.e. "play -n -r 16k synth ..."   
 
-Now that you have the basic server platform installed, copy the supplied .sh, .cgi, .dat, and .conf files somewhere under /var/www/html.  I created an "Askpi" folder, and installed them there.  You'll also need to create a local "tmp" directory in the same folder where you deposit the cgi scripts. Afterwards, be sure to set the correct file ownership and permissions:
+Now that you have the basic server platform installed, copy the supplied .sh, .cgi, .dat, and .conf files somewhere under /var/www/html.  I created an "Askpi" folder, and installed them there.  You'll also need to mkdir a "tmp" directory in the same folder where you deposit the cgi scripts.  And if you plan to use the askpi.sh voice client, you'll also need to mknod a "askpi.fifo" named pipe in that same folder (mknod askpi.fifo p).  Afterwards, be sure to set the correct file ownership and permissions:
 ```
 sudo ksh
 cd /var/www
 chown -R www-data:www-data .
 cd /var/www/html/Askpi
 chmod +x *.cgi
-```  
+```
+One last thing...  The askpi.sh client will try to launch a web browser on the local console whenever it receives a URL from the web assitant that's not an audio/video file (for example, when the user asks to perform a Google search).  In order to open a browser, the client needs permission to access the DISPLAY.  Follow the instructions [here](https://raspberrypi.stackexchange.com/questions/28199/raspberry-pi-starting-programs-automatically-on-startup) to add an "xhost +" command under  Preferences->LXSession->Autostart.
+
 ## Google & Amazon cloud services
 As mentioned above, the askpi.sh client uses [Google's cloud for speech-to-text services](https://cloud.google.com), and [Amazon's cloud for text-to-speech](https://console.aws.amazon.com).  In order to make use of the client, you'll first need to establish an account with these cloud providers, then obtain credentials to populate in credentials.conf.   
 
