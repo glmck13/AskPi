@@ -33,9 +33,9 @@ do
 	LISTEN*)
 		while true
 		do
-			play -n -r 16k synth 0.5 sine 480 sine 620 remix - 2>/dev/null
+			play -n -r 16k synth 0.1 sine 480 sine 941 delay 0 0.1 remix - 2>/dev/null
 
-			timeout 3s rec -r 16k -c 1 -t wav $VOICE vol 5 2>/dev/null
+			timeout 4s rec -r 16k -c 1 -t wav $VOICE vol 5 2>/dev/null
 			Speech=$(google-stt.sh <$VOICE)
 
 			curl -s --data-urlencode "Speech=$Speech" \
