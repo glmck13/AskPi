@@ -8,11 +8,11 @@ Finished integrating AWS Polly to provide higher quality text-to-speech.  Also a
 ## Update: July 4th, 2017
 When I first published this project, I decided to forego speech recognition on the Pi, and just focus on the backend processing engine.  But I couldn't shake the urge to add a voice processing component, so I finally took the plunge, and recently tackled that part as well.  
 
-The design is pretty simple.  I implement a very basic client that records user speech, translates this to text (using Google's API), then submits the translated text to the CGI backend I had built in phase one.  The client then post-processes URLs returned from the CGI app, and outputs these on the Pi using the appropriate video/audio player.  
+The design is pretty simple.  I implement a very basic client that records user speech, translates this to text (using Google's API), then submits the translated text to the CGI backend I had built in phase one.  The client then post-processes URLs returned from the CGI app, and outputs these on the Pi using the appropriate video/audio player.  Most recently I integrated Amazon's text-to-speech service (Polly) to render all spoken responses.  
 
-But there's one problem I needed to solve: when should the Pi listen for user input?  At first I experimented with [pocketsphinx_continuous](https://cmusphinx.github.io/) - a copy of which is already included in the Raspian distribution - with the intent of recognizing a set of verbal cues that might be used to initiate a transaction with the Pi (just like Captain Kirk addresses the ship's computer as "Computer" on Star Trek).  While this worked much of the time, the pocketsphinx engine was still prone to make translation errors, especially in noisy environments.  
+In order to simplify the design, I needed a way to detect when to listen for verbal input from a user.  At first I experimented with [pocketsphinx_continuous](https://cmusphinx.github.io/) - a copy of which is already included in the Raspian distribution - with the intent of recognizing a set of verbal cues that might be used to initiate a transaction with the Pi (just like Captain Kirk addresses the ship's computer as "Computer" on Star Trek).  While this worked much of the time, the pocketsphinx engine was still prone to make translation errors, especially in noisy environments.  
 
-My answer?  A little gadget I used in my [MyVitals](../../../MyVitals) project: the ITAG.  The ITAG is essentially a wireless button that connects to the Pi over its Bluetooth (low energy) interface.  So in order for a user to "talk" to the Pi, they must first press the button on the ITAG.  The Pi will respond with a short "beep" that signals to the user to talk into the microphone.  The Pi then records a few seconds of user speech, and submits this to Google's speech-to-text platform to render a translation.  
+My answer?  A little gadget I used in my [MyVitals](../../../MyVitals) project: the ITAG.  The ITAG is essentially a wireless button that connects to the Pi over its Bluetooth (low energy) interface.  So in order for a user to "talk" to the Pi, they must first press the button on the ITAG.  The Pi will respond with a short "beep" that signals to the user to talk into the microphone.  The Pi then records a few seconds of user speech, and submits this to Google's speech-to-text platform for translation.  
 
 ## Background
 For some time I've wanted to convert my Raspberry Pi into a virtual assistant, like Amazon's Alexa, Apple's Siri, etc.  I dabbled with [Amazon's Alexa Skill Kit (ASK)](https://developer.amazon.com/alexa-skills-kit), [Facebook's WIT](https://wit.ai/), and [Recast.ai](https://recast.ai) but was frustrated since I had to develop and host my app in their cloud.  Moreover, I wasn't looking to develop a very sophisticated voice command system, just something that could respond to some very basic verbal cues.  
@@ -51,6 +51,13 @@ chown -R www-data:www-data .
 cd /var/www/html/Askpi
 chmod +x *.cgi
 ```  
+## Google & Amazon cloud services
+As mentioned above, the askpi.sh client uses [Google's cloud for speech-to-text services](https://cloud.google.com), and [Amazon's cloud for text-to-speech](https://console.aws.amazon.com).  In order to make use of the client, you'll first need to establish an account with these cloud providers, then obtain credentials to populate in credentials.conf.   
+
+I use the "curl" command to invoke the APIs for these services directly, so there's no need to install/configure any additional SDKs on your Pi.  The google-stt.sh and aws-polly.sh scripts are written as classic UNIX filters:
+* google-stt.sh reads a wav-formatted file fron stdin (mono, 16k sampling rate), and outputs a plain text translation to stdout
+* aws-polly.sh reads plain text fronm stdin, and outputs an mp3-formatted audio stream to stdout  
+
 ## Use Case: Connecting with a microphone & speaker
 
 ## Use Case: Connecting with a smart phone
