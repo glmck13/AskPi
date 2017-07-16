@@ -1,6 +1,9 @@
 # AskPi
-A lightweight virtual assistant for your Linux/Raspberry Pi host  
+A lightweight virtual assitant for your Linux/Raspberry Pi host, integrating APIs for Google Speech & Amazon Polly  
 <img src=https://github.com/glmck13/Askpi/blob/master/docs/architecture.png>  
+ 
+## Update: July 15, 2017
+Finished integrating AWS Polly to provide higher quality text-to-speech.  Also added a hook to perform Google searches verbally. 
 
 ## Update: July 4th, 2017
 When I first published this project, I decided to forego speech recognition on the Pi, and just focus on the backend processing engine.  But I couldn't shake the urge to add a voice processing component, so I finally took the plunge, and recently tackled that part as well.  
