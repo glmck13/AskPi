@@ -2,7 +2,7 @@
 
 PATH=$PWD:$PATH
 
-KEYWORDS=${Keywords:-ready|computer}
+KEYWORDS=${Keywords:-joe|computer}
 FIFO=askpi.fifo
 
 pocketsphinx_continuous 2>/dev/null | while read line
