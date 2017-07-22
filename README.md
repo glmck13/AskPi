@@ -3,7 +3,7 @@ A lightweight virtual assitant for your Linux/Raspberry Pi host, integrating API
 <img src=https://github.com/glmck13/Askpi/blob/master/docs/architecture.png>  
  
 ## Update: July 22, 2017
-Added a pocketsphinx utility to listen for verbal cues, to supplement the ITAG.
+Added a pocketsphinx utility to listen for verbal cues to supplement the ITAG.
 
 ## Update: July 15, 2017
 Finished integrating AWS Polly to provide higher quality text-to-speech.  Also added a hook to perform Google searches. 
