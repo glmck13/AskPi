@@ -71,7 +71,7 @@ do
 					;;
 
 				*)
-					DISPLAY=:0 $BROWSER "$url" &
+					DISPLAY=$Display:0 $BROWSER "$url" &
 					;;
 				esac
 

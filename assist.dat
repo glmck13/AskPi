@@ -1,4 +1,19 @@
 #
+# Google news
+#
+=.*google.*new
+'<a href=\\"https://news.google.com\\" >Google News</a>
+.
+
+
+#
+# Google search
+#
+=.*google
+'<a href=\\"https://www.google.com/search?q=$(urlencode ${Speech#*google })\\" >Google Search</a>
+.
+
+#
 # News briefing (Reuters)
 #
 =.*news
@@ -22,23 +37,6 @@ Downloading $(date +"%B %d")
 '<audio controls>
 '<source src="http://ccc.usccb.org/cccradio/NABPodcasts/$(date +\"%y_%m_%d\").mp3" controls>
 '</audio>
-.
-
-#
-# Youtube: "One Day More"
-#
-=.*one.*day.*more
-Here is the youtube video you requested:
-'<a href="https://www.youtube.com/watch?v=Cn8PiqIXEjQ" >One Day More</a>
-.
-
-#
-# Duke Genesis
-#
-=.*music
-=.*duke
-Here is the youtube video you requested:
-'<a href="https://www.youtube.com/watch?v=4j2h5i7CNVw" >Duke (Genesis)</a>
 .
 
 #
@@ -75,14 +73,6 @@ The current forecast: $(curl -s 'https://forecast-v3.weather.gov/point/39.2851,-
 #
 =.*battery
 The ${Banner%:*} battery level is ${Banner#*:} percent.
-.
-
-#
-# Google search
-#
-=.*google
-You said: $Speech.  Here is the link you requested:
-'<a href=\\"https://www.google.com/search?q=$(urlencode ${Speech#*google })\\" >Google Search</a>
 .
 
 =.*

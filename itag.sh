@@ -2,7 +2,7 @@
 
 PATH=$PWD:$PATH
 
-ITAGOPTS=C3:25:A5:FA:58:FC
+ITAGADDR=${ItagAddr:-C3:25:A5:FA:58:FC}
 FIFO=askpi.fifo
 
 typeset -i b
@@ -12,7 +12,7 @@ do
 	expect - <<-EOF  | while read x
 
 	set timeout 100
-	spawn gatttool -b ${ITAGOPTS} -I
+	spawn gatttool -b ${ITAGADDR} -I
 	expect "> "
 
 	while true {
