@@ -2,8 +2,11 @@
 A lightweight virtual assitant for your Linux/Raspberry Pi host, integrating APIs for Google Speech & Amazon Polly  
 <img src=https://github.com/glmck13/Askpi/blob/master/docs/architecture.png>  
  
+## Update: July 22, 2017
+Added a pocketsphinx utility to listen for verbal cues, to supplement the ITAG.
+
 ## Update: July 15, 2017
-Finished integrating AWS Polly to provide higher quality text-to-speech.  Also added a hook to perform Google searches verbally. 
+Finished integrating AWS Polly to provide higher quality text-to-speech.  Also added a hook to perform Google searches. 
 
 ## Update: July 4th, 2017
 When I first published this project, I decided to forego speech recognition on the Pi, and just focus on the backend processing engine.  But I couldn't shake the urge to add a voice processing component, so I finally took the plunge, and recently tackled that part as well.  
@@ -35,6 +38,7 @@ Start with a default raspbian build for the Pi, and follow the [installation ins
 ```
 sudo ksh
 apt install gridsite-clients # urlencode
+apt install pocketsphinx # primitive speech-to-text engine
 apt install libttspico-utils # pico2wave text-to-speech engine
 apt install sox # rec & play, and synthesized sound
 apt install mpg123 # mp3 player
