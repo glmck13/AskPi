@@ -71,8 +71,12 @@ $([ -f "$Configfile" ] && cat $Configfile)
 <table>
 
 <tr>
+<th colspan=2>Config File</th>
+<th colspan=2>Voice Service</th>
+</tr>
+
+<tr>
 <td>
-Configfile:<br>
 <input type="text" size=15 name="Configfile" value="$Configfile">
 </td>
 <td>
@@ -90,8 +94,8 @@ Display:<br>
 <input type="text" size=15 name="Display" value="$Display">
 </td>
 <td>
-<input type="submit" name="Command" value="Stop Voice Service" /><br>
-<input type="submit" name="Command" value="Start Voice Service" />
+<input type="submit" name="Command" value="Stop" /><br>
+<input type="submit" name="Command" value="Start" />
 </td>
 </tr>
 
