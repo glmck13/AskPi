@@ -2,6 +2,7 @@
 
 PATH=$PWD:$PATH
 
+SETTINGS=askpi.conf
 DATAFILE=assist.dat
 
 read -r QUERY_STRING
@@ -13,6 +14,16 @@ do
 	print $vars | IFS='&' read v vars
 	[ "$v" ] && export $v
 done
+
+. $SETTINGS; rm -f $SETTINGS
+for v in ItagAddr Keywords Display
+do
+	export $v="$(eval urlencode -d '$'${v})"
+	[ ! "$(eval print '$'${v})" ] && export $v=$(eval print '$'${v}_SAVE)
+	export ${v}_SAVE=$(eval print '$'${v})
+	print ${v}_SAVE=\"$(eval print '$'${v}_SAVE)\" >>$SETTINGS
+done
+chmod +x $SETTINGS
 
 case "$Command" in
 	Save)
@@ -31,10 +42,6 @@ case "$Command" in
 		pids=$(pgrep -u $uid | egrep -v "$pids")
 		[ "$pids" ] && kill $pids >/dev/null 2>&1
 		if [[ $Command == Start* ]]; then
-			for v in ItagAddr Keywords Display
-			do
-				export $v="$(eval urlencode -d '$'$v)"
-			done
 			sphinx.sh >/dev/null 2>&1 &
 			itag.sh >/dev/null 2>&1 &
 			askpi.sh >/dev/null 2>&1 &
@@ -76,11 +83,11 @@ Configfile:<br>
 
 <td>
 ItagAddr:<br>
-<input type="text" size=15 name="ItagAddr"><br>
+<input type="text" size=15 name="ItagAddr" value="$ItagAddr"><br>
 Keywords:<br>
-<input type="text" size=15 name="Keywords"><br>
+<input type="text" size=15 name="Keywords" value="$Keywords"><br>
 Display:<br>
-<input type="text" size=15 name="Display">
+<input type="text" size=15 name="Display" value="$Display">
 </td>
 <td>
 <input type="submit" name="Command" value="Stop Voice Service" /><br>

@@ -2,7 +2,7 @@
 
 PATH=$PWD:$PATH
 
-ITAGADDR=${ItagAddr:-C3:25:A5:FA:58:FC}
+ITAGADDR=${ItagAddr:-00}
 FIFO=askpi.fifo
 
 typeset -i b
@@ -29,11 +29,7 @@ do
 	send "char-read-hnd 0x0003\r"
 	expect "> "
 
-	send "char-read-uuid 0x2a19\r"
-	expect "> "
-
-	send "char-write-req 0x0036 0100\r"
-	expect "Characteristic value was written successfully"
+	send "char-read-hnd 0x0008\r"
 	expect "> "
 
 	expect "WARNING"
@@ -42,16 +38,17 @@ do
 
 	do
 
-	if [[ $x == *Characteristic\ value/descriptor:* ]]; then
+	if [[ $x == *Characteristic\ value/descriptor:\ ??\ ??\ * ]]; then
 		Device="$(print ${x##*:} | xxd -r -p)"
+		Device=${Device%% *}
 		print "CONNECT $Device" >$FIFO
 
-	elif [[ $x == *handle:\ 0x0030* ]]; then
+	elif [[ $x == *Characteristic\ value/descriptor:\ ??\ * ]]; then
 		print ${x##*:} | read lo x
 		b=16#${lo}
 		print "BATTERY $Device:$b" >$FIFO
 
-	elif [[ $x == *Notification\ handle\ =\ 0x0035\ value:\ 01* ]]; then
+	elif [[ $x == *Notification\ handle\ =\ 0x00??\ value:\ 01* ]]; then
 		print "LISTEN $Device" >$FIFO
 
 	elif [[ $x == *Invalid\ file\ descriptor* ]]; then
