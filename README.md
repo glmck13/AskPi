@@ -17,6 +17,17 @@ In order to simplify the design, I needed a way to detect when to listen for ver
 
 My answer?  A little gadget I used in my [MyVitals](../../../MyVitals) project: the ITAG.  The ITAG is essentially a wireless button that connects to the Pi over its Bluetooth (low energy) interface.  So in order for a user to "talk" to the Pi, they must first press the button on the ITAG.  The Pi will respond with a short "beep" that signals to the user to talk into the microphone.  The Pi then records a few seconds of user speech, and submits this to Google's speech-to-text platform for translation.  
 
+## Parts List
+The table below lists the parts you'll need to build your virtual assitant.  All of the items can be ordered on Amazon.  Total cost is ~$100.  
+
+| Description | Price |
+| --- | --- |
+| [CanaKit Raspberry Pi 3 Complete Starter Kit - 32 GB Edition](https://www.amazon.com/exec/obidos/ASIN/B01C6Q2GSY) |	$69.99 |
+| [Plugable USB Audio Adapter with 3.5mm Speaker/Headphone and Microphone Jacks](https://www.amazon.com/exec/obidos/ASIN/B00NMXY2MO) | $7.85 |
+| [Connectland Goose Neck Tabletop Stereo Microphone with Stand](https://www.amazon.com/exec/obidos/ASIN/B0028Y4DCC) | $6.99 |
+| [Satechi iTour-Pop 3.5mm Aux Portable Rechargeable Speaker](https://www.amazon.com/exec/obidos/ASIN/B003Y7PXSK) | $12.99 |
+| [Mini Wireless Phone Bluetooth 4.0 Tracker Alarm iTag](https://www.amazon.com/exec/obidos/ASIN/B01CEEIJUW) | $6.99 |
+
 ## Background
 For some time I've wanted to convert my Raspberry Pi into a virtual assistant, like Amazon's Alexa, Apple's Siri, etc.  I dabbled with [Amazon's Alexa Skill Kit (ASK)](https://developer.amazon.com/alexa-skills-kit), [Facebook's WIT](https://wit.ai/), and [Recast.ai](https://recast.ai) but was frustrated since I had to develop and host my app in their cloud.  Moreover, I wasn't looking to develop a very sophisticated voice command system, just something that could respond to some very basic verbal cues.  
 
