@@ -14,6 +14,11 @@ trap "rm -f $VOICE $COOKIES; exit" INT HUP QUIT EXIT
 
 exec <>$FIFO
 
+for note in G:0.25 C:0.25 A:0.25 F:0.25 E:0.25 C:0.25 D:0.5 G:0.25 C:0.25 A:0.25 B:0.25 C5:0.25 D5:0.25 C5:0.5
+do
+	play -n -r 16k synth ${note#*:} pluck ${note%:*} vol 0.1
+done
+
 while true
 do
 	read cmd <$FIFO
