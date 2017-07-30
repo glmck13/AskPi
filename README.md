@@ -72,7 +72,7 @@ As mentioned above, the askpi.sh client uses [Google's cloud for speech-to-text 
 
 I use the "curl" command to invoke the APIs for these services directly, so there's no need to install/configure any additional SDKs on your Pi.  The google-stt.sh and aws-polly.sh scripts are written as classic UNIX filters:
 * google-stt.sh reads a wav-formatted file fron stdin (mono, 16k sampling rate), and outputs a plain text translation to stdout
-* aws-polly.sh reads plain text fronm stdin, and outputs an mp3-formatted audio stream to stdout  
+* aws-polly.sh reads plain text fronm stdin, and outputs an mp3-formatted audio stream to stdout.  [Here's a good link that describes how to build the Amazon API request](http://czak.pl/2015/09/15/s3-rest-api-with-curl.html)     
 
 ## Use Case: Connecting with a smart phone
 1. In order to interact with your assistant, open a web browser on your smart phone (or any other client), and navigate to the URL where you installed askpi.  Screen #1.  
