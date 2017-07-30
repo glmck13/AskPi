@@ -5,7 +5,7 @@ PATH=$PWD:$PATH
 SETTINGS=askpi.conf
 DATAFILE=assist.dat
 
-read -r QUERY_STRING
+[ "$REQUEST_METHOD" = "POST" ] && read -r QUERY_STRING
 
 vars="$QUERY_STRING"
 [ "$HTTP_COOKIE" ] && vars="${vars}&${HTTP_COOKIE}"
