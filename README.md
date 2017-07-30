@@ -3,7 +3,7 @@ A lightweight virtual assitant for your Linux/Raspberry Pi host, integrating API
 <img src=https://github.com/glmck13/Askpi/blob/master/docs/architecture.png>  
  
 ## Update: July 22, 2017
-Added a pocketsphinx utility to listen for verbal cues to supplement the ITAG.
+Added a pocketsphinx utility to listen for verbal cues to supplement the iTag.
 
 ## Update: July 15, 2017
 Finished integrating AWS Polly to provide higher quality text-to-speech.  Also added a hook to perform Google searches. 
@@ -15,7 +15,7 @@ The design is pretty simple.  I implement a very basic client that records user 
 
 In order to simplify the design, I needed a way to detect when to listen for verbal input from a user.  At first I experimented with [pocketsphinx_continuous](https://cmusphinx.github.io/) - a copy of which is already included in the Raspian distribution - with the intent of recognizing a set of verbal cues that might be used to initiate a transaction with the Pi (just like Captain Kirk addresses the ship's computer as "Computer" on Star Trek).  While this worked much of the time, the pocketsphinx engine was still prone to make translation errors, especially in noisy environments.  
 
-My answer?  A little gadget I used in my [MyVitals](../../../MyVitals) project: the ITAG.  The ITAG is essentially a wireless button that connects to the Pi over its Bluetooth (low energy) interface.  So in order for a user to "talk" to the Pi, they must first press the button on the ITAG.  The Pi will respond with a short "beep" that signals to the user to talk into the microphone.  The Pi then records a few seconds of user speech, and submits this to Google's speech-to-text platform for translation.  
+My answer?  A little gadget I used in my [MyVitals](../../../MyVitals) project: the iTag.  The iTag is essentially a wireless button that connects to the Pi over its Bluetooth (low energy) interface.  So in order for a user to "talk" to the Pi, they must first press the button on the iTag.  The Pi will respond with a short "beep" that signals to the user to talk into the microphone.  The Pi then records a few seconds of user speech, and submits this to Google's speech-to-text platform for translation.  
 
 ## Parts List
 The table below lists the parts you'll need to build your virtual assitant.  All of the items can be ordered on Amazon.  Total cost is ~$100.  
