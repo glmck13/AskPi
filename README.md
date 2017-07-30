@@ -47,7 +47,6 @@ Enough background, let's talk about how to install and configure the solution.
 ## Installation
 Start with a default raspbian build for the Pi, and follow the [installation instructions on the "MyVitals" wiki](../../../MyVitals/wiki/1-Install) to configure a web server, bluetooth, and sound support.  It seems that "gatttool" is no longer built by default when compiling the BlueZ package, so you may need to add both "--enable-deprecated" and "--enable-experimental" when running the initial "configure" script.  Go ahead and install the following packages as well:  
 ```
-sudo ksh
 apt install gridsite-clients # urlencode
 apt install pocketsphinx # primitive speech-to-text engine
 apt install libttspico-utils # pico2wave text-to-speech engine
