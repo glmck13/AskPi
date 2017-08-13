@@ -36,6 +36,9 @@ do
 		;;
 
 	LISTEN*)
+		[ "$PIDS" ] && kill $PIDS 2>/dev/null
+		PIDS=""
+
 		while true
 		do
 			play -n -r 16k synth 0.1 sine 480 sine 941 delay 0 0.1 remix - 2>/dev/null
@@ -60,32 +63,38 @@ do
 				case "$url" in
 
 				*.wav)
-					play "$url" 2>/dev/null
+					cmd='play "$url"'
 					;;
 
 				*.mp3)
-					mpg123 "$url" 2>/dev/null
+					cmd='mpg123 "$url"'
 					;;
 
 				*.mp4)
-					omxplayer -o alsa:plughw:Device "$url" 2>/dev/null
+					cmd='omxplayer -o alsa:plughw:Device "$url"'
 					;;
 
 				*youtube*)
-					omxplayer -o alsa:plughw:Device $(youtube-dl -g -f best "$url") 2>/dev/null
+					cmd='omxplayer -o alsa:plughw:Device $(youtube-dl -g -f best "$url")'
 					;;
 
 				*)
-					DISPLAY=${Display:-:0} $BROWSER "$url" &
+					cmd='DISPLAY=${Display:-:0} $BROWSER "$url"'
 					;;
 				esac
+
+				[ "$PIDS" ] && wait
+				eval exec $cmd 2>/dev/null &
+				PIDS+=" $!"
 
 				elif [[ "$html" == \<p\>*\<?p\> ]]; then
 
 				html=${html#<p>} html=${html%</p>}
 
-				print "$html" | grep -o -E '[^\.]*.' | split -l5 --filter=aws-polly.sh |
-					mpg123 - 2>/dev/null
+				[ "$PIDS" ] && wait
+				( print "$html" | grep -o -E '[^\.]*.' | split -l5 --filter=aws-polly.sh |
+					mpg123 - 2>/dev/null ) &
+				PIDS+=" $!"
 
 				fi
 			done
