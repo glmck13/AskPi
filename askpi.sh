@@ -79,13 +79,15 @@ do
 					;;
 
 				*)
-					cmd='DISPLAY=${Display:-:0} $BROWSER "$url"'
+					cmd=''; DISPLAY=${Display:-:0} $BROWSER "$url" &
 					;;
 				esac
 
-				[ "$PIDS" ] && wait
-				eval exec $cmd 2>/dev/null &
-				PIDS+=" $!"
+				if [ "$cmd" ]; then
+					[ "$PIDS" ] && wait
+					eval exec $cmd 2>/dev/null &
+					PIDS+=" $!"
+				fi
 
 				elif [[ "$html" == \<p\>*\<?p\> ]]; then
 
