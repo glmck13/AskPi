@@ -44,6 +44,7 @@ case "$Command" in
 		if [[ $Command == Start* ]]; then
 			sphinx.sh >/dev/null 2>&1 &
 			itag.sh >/dev/null 2>&1 &
+			ir.sh >/dev/null 2>&1 &
 			askpi.sh >/dev/null 2>&1 &
 		fi
 		ExecCmd="ps -fu $uid"
