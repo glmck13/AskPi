@@ -1,0 +1,5 @@
+begin
+        prog = askpi
+        button = KEY_POWER
+        config = LISTEN IR
+end
