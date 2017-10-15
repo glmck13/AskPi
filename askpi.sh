@@ -35,7 +35,7 @@ do
 		Banner="${cmd#* }"
 		;;
 
-	LISTEN*)
+	LISTEN*|SPEECH*)
 		[ "$PIDS" ] && kill $PIDS 2>/dev/null
 		PIDS=""
 
@@ -43,8 +43,12 @@ do
 		do
 			play -n -r 16k synth 0.1 sine 480 sine 941 delay 0 0.1 remix - 2>/dev/null
 
-			timeout 4s rec -r 16k -c 1 -t wav $VOICE vol 5 2>/dev/null
-			Speech=$(google-stt.sh <$VOICE)
+			if [[ $cmd == LISTEN* ]]; then
+				timeout 4s rec -r 16k -c 1 -t wav $VOICE vol 5 2>/dev/null
+				Speech=$(google-stt.sh <$VOICE)
+			else
+				Speech=${cmd#* }
+			fi
 
 			curl -s --data-urlencode "Speech=$Speech" \
 				--data "Banner=$Banner" \
