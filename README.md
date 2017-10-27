@@ -1,7 +1,10 @@
 # AskPi
 A lightweight virtual assitant for your Linux/Raspberry Pi host, integrating APIs for Google Speech & Amazon Polly  
 <img src=https://github.com/glmck13/Askpi/blob/master/docs/architecture.png>  
- 
+
+## Update: Oct 15, 2017
+Integrated interface to "Charlie" app on Alexa, enabling Alexa directives to be processed on AskPi.
+
 ## Update: July 22, 2017
 Added a pocketsphinx utility to listen for verbal cues to supplement the iTag.
 
