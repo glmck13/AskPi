@@ -1,4 +1,13 @@
 #
+# Duke post-game press conference
+#
+=.*coach.*k
+=.*duke.*press
+=.*duke.*post.*game
+'$(coachK.sh | tr '\\n' ' ' | IFS="," read s u x; print "<p>$s</p>\\n<audio controls><source src=$u></audio>")
+.
+
+#
 # Google news
 #
 =.*google.*new
@@ -34,7 +43,7 @@ $(apnews.sh)
 =.*reading
 Downloading $(date +"%B %d")
 '<audio controls>
-'<source src="http://ccc.usccb.org/cccradio/NABPodcasts/$(date +\"%y_%m_%d\").mp3" controls>
+'<source src="http://ccc.usccb.org/cccradio/NABPodcasts/$(date +\"%y_%m_%d\").mp3">
 '</audio>
 .
 
