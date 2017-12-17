@@ -103,7 +103,7 @@ EOF
 EOF
 
 [ "$Html" ] && cat - <<EOF
-<p>$Html</p>
+$Html
 EOF
 
 cat - <<EOF
