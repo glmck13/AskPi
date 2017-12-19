@@ -1,10 +1,8 @@
 #
-# Duke post-game press conference
+# Coach K
 #
 =.*coach.*k
-=.*duke.*press
-=.*duke.*post.*game
-'$(coachK.sh | tr '\\n' ' ' | IFS="," read s u x; print "<p>$s</p>\\n<audio controls><source src=$u></audio>")
+'$(coachK.sh ${Speech#*coach*k})
 .
 
 #
