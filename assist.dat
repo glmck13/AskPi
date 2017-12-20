@@ -2,7 +2,7 @@
 # Coach K
 #
 =.*coach.*k
-'$(coachK.sh ${Speech#*coach*k})
+'$(coachK.sh ${Speech#*coach*k* })
 .
 
 #
