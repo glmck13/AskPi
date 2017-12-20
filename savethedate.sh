@@ -16,5 +16,5 @@ print "There are $days days left until $Caption."
 
 for c in events birthdays deaths weddings
 do
-	curl -s https://www.onthisday.com/$c/$Month/$Day | grep event-list__item | sed -e "s/<[^>]*>//g" | shuf -n1 | recode html..ascii | sed -e "s/ /: /" -e "s/^/${Categories[$c]} /" -e "s/$/./"
+	curl -s https://www.onthisday.com/$c/$Month/$Day | grep event-list__item | sed -e "s/<[^>]*>//g" | shuf -n1 | recode -f html..ascii | sed -e "s/ /: /" -e "s/ \& / and /g" -e "s/^/${Categories[$c]} /" -e "s/$/./"
 done

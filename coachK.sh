@@ -1,7 +1,18 @@
 #!/bin/ksh
 
 typeset -l Request Var
-Request=${1:?}
+Request=$1
+
+case $Request in
+	*notes*)
+		Request="notes";;
+	*quotes*)
+		Request="quotes";;
+	*press*|*conference*|*post*|*game*)
+		Request="presser";;
+	*)
+		Request="presser";;
+esac
 
 case $Request in
 
@@ -46,7 +57,7 @@ notes|quotes)
 	fi
 	;;
 
-press*|conference*|post*|game*)
+presser)
 	curl -sL https://tunein.com/station/?stationId=230308 |
 		grep -o "[^,;>]*[,;>]" |
 		grep -E '"title"|"playUrl"' |
