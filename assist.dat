@@ -6,6 +6,20 @@
 .
 
 #
+# Savethedate
+#
+=.*savethedate
+$(savethedate.sh ${Speech#*savethedate})
+.
+
+#
+# Crossfit
+#
+=.*crossfit
+$(crossfit.sh ${Speech#*crossfit})
+.
+
+#
 # Google news
 #
 =.*google.*new
