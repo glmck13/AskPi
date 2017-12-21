@@ -49,7 +49,7 @@ notes|quotes)
 		curl -s $Pdf >/tmp/$Request$$.pdf
 		print "<p>\\c"
 		pdftotext -layout -enc ASCII7 /tmp/$Request$$.pdf - | tr -c "[:print:]" " " |
-			sed -e "s/ \+/ /g" -e "s-//-,-g"
+			sed -e "s/ \+/ /g" -e "s-//-,-g" -e "s/\[//g" -e "s/\]//g"
 		print "</p>"
 		rm -f /tmp/$Request$$.pdf
 	else
