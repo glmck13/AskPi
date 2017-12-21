@@ -2,7 +2,7 @@
 
 typeset -l Month
 typeset -A Categories
-Categories+=([events]="On this day in history" [birthdays]="Born" [deaths]="Died" [weddings]="Married")
+Categories+=([events]="On this day in history" [birthdays]="Notable births" [deaths]="Obituaries" [weddings]="Famous weddings")
 
 Caldate=${1:-today}; [ $# -gt 0 ] && shift
 Caption=${*:-$Caldate}
@@ -16,5 +16,6 @@ print "There are $days days left until $Caption."
 
 for c in events birthdays deaths weddings
 do
-	curl -s https://www.onthisday.com/$c/$Month/$Day | grep event-list__item | sed -e "s/<[^>]*>//g" | shuf -n1 | recode -f html..ascii | sed -e "s/ /: /" -e "s/ \& / and /g" -e "s/^/${Categories[$c]} /" -e "s/$/./"
+	curl -s https://www.onthisday.com/$c/$Month/$Day | grep event-list__item | sed -e "s/<[^>]*>//g" | shuf -n1 | recode -f html..ascii | sed -e "s/ /... /" -e "s/ \& / and /g" -e "s/^/${Categories[$c]} /" -e "s/$/;/"
+	print " ... "
 done
