@@ -4,11 +4,13 @@ typeset -l Request Var
 Request=$1
 
 case $Request in
+	*game*)
+		Request="game";;
 	*notes*)
 		Request="notes";;
 	*quotes*)
 		Request="quotes";;
-	*press*|*conference*|*post*|*game*)
+	*press*|*conference*|*post*)
 		Request="presser";;
 	*)
 		Request="presser";;
@@ -16,13 +18,18 @@ esac
 
 case $Request in
 
-notes|quotes)
+game)
+	print "<p>Here are details about our next game: \\c"
+	curl -s 'http://www.goduke.com/SportSelect.dbml?SPID=1845&SPSID=22726&DB_OEM_ID=4200' | grep -m1 -B40 "Live Audio" | sed -e "s/<[^>]*>//g" -e "/^[ 	]*$/d" | head -4 | sed -e "s/^[ 	]*//" -e "s/\&[^;]*;//g" -e "s/\*//g" -e "s/$/, /" | tr -d "\n"
+	print "</p>"
+	;;
 
+notes|quotes)
 	record="" last=""
 	curl -s 'http://www.goduke.com/SportSelect.dbml?&DB_OEM_ID=4200&SPID=1845&SPSID=22726' |
 		grep -Ei -A1 "class=.opponent|class=.date_nowrap|notes$|quotes$" |
 		grep "^					" |
-		sed -e "s/.*HREF=.\(.*\.pdf\).*.>\(.*\)/\1,\2/" -e "s/<[^>]\+>//g" -e "s/\&nbsp;//g" -e "s/	//g" -e "/^$/d" | while read line
+		sed -e "s/.*HREF=.\(.*\.pdf\).*.>\(.*\)/\1,\2/" -e "s/<[^>]\+>//g" -e "s/\&[^;]*;//g" -e "s/	//g" -e "/^$/d" | while read line
 	do
 		line=${line//\*/}
 
