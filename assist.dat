@@ -49,6 +49,17 @@ $(apnews.sh)
 .
 
 #
+# Daily mass readings (Alexa)
+#
+=.*alexa.*mass
+Downloading $(date +"%B %d")
+'<audio controls>
+!curl -sk https://mckspot.dyndns.org:8443/cdn/mkdailymassreadings.cgi >/dev/null
+'<source src="https://mckspot.dyndns.org:8443/cdn/dailymassreadings.m3u">
+'</audio>
+.
+
+#
 # Daily mass readings
 #
 =.*mass
