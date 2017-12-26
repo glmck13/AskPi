@@ -4,6 +4,8 @@ typeset -l Request Var
 Request=$1
 
 case $Request in
+	*pardon*|*my*take*)
+		Request="pardon-my-take";;
 	*game*)
 		Request="game";;
 	*notes*)
@@ -73,6 +75,12 @@ presser)
 		grep -B1 "\.mp3" | head -2 | tr "\n" "|" | IFS="|" read Opponent Url
 		print "<p>$Opponent</p>"
 		print "<audio controls><source src=$Url></audio>"
+	;;
+
+pardon-my-take)
+	curl -sk https://mckspot.dyndns.org:8443/cdn/mkpardonmytake.cgi >/dev/null
+	print "<p>Accessing Pardon My Take...</p>"
+	print "<audio controls><source src="https://mckspot.dyndns.org:8443/cdn/pardonmytake.m3u"></audio>"
 	;;
 
 esac
