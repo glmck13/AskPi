@@ -9,7 +9,7 @@
 # Savethedate
 #
 =.*savethedate
-$(savethedate.sh "${Speech#*savethedate}")
+$(savethedate.sh ${Speech#*savethedate})
 .
 
 #
