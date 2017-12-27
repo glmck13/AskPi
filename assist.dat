@@ -2,21 +2,21 @@
 # Coach K
 #
 =.*coach.*k
-'$(coachK.sh ${Speech#*coach*k* })
+'$(coachK.sh "${Speech#*coach*k* }")
 .
 
 #
 # Savethedate
 #
 =.*savethedate
-$(savethedate.sh ${Speech#*savethedate})
+$(savethedate.sh "${Speech#*savethedate}")
 .
 
 #
 # Crossfit
 #
 =.*crossfit
-$(crossfit.sh ${Speech#*crossfit})
+$(crossfit.sh "${Speech#*crossfit}")
 .
 
 #
