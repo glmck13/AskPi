@@ -12,7 +12,7 @@ if [ "${Blog[$Dow]}" ]; then
 	sed -e "s/<[^>]*>/.../g" \
 		-e "s/ [sf]*([^)]*)//g" \
 		-e "s/  */ /g" \
-		-e "s/^/The 12 labours fitness workout for $Caldate:/" \
+		-e "s?^?The 12 labours fitness workout for $Caldate:?" \
 		-e "s/\.\.\.\+/... /g"
 else
 	print "There is no workout $Caldate."
