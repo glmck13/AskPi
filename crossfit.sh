@@ -3,7 +3,7 @@
 typeset -A Blog
 Blog+=([Mon]="mon" [Tue]="tues" [Wed]="wed" [Thu]="thurs" [Fri]="fri" [Sat]="sat")
 
-Caldate=${1:-tomorrow}
+Caldate=${1:-tomorrow}; Caldate=${Caldate%% *}
 
 Dow=$(date -d "$Caldate" "+%a")
 
