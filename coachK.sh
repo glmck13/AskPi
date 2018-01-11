@@ -4,16 +4,16 @@ typeset -l Request Var
 Request=$1
 
 case $Request in
-	*pardon*|*my*take*)
-		Request="pardon-my-take";;
-	*game*)
-		Request="game";;
 	*notes*)
 		Request="notes";;
 	*quotes*)
 		Request="quotes";;
 	*press*|*conference*|*post*)
 		Request="presser";;
+	*game*)
+		Request="game";;
+	*pardon*|*my*take*)
+		Request="pardon-my-take";;
 	*)
 		Request="presser";;
 esac
@@ -49,22 +49,22 @@ notes|quotes)
 	[[ "$record" == *.pdf* ]] && last=$record
 
 	print "$last" | IFS="|" read Date Opponent pdf1 pdf2
-	Var=${pdf1#*,} Val=${pdf1%,*}; eval $Var=$Val
-	Var=${pdf2#*,} Val=${pdf2%,*}; eval $Var=$Val
+	Var=${pdf1#*,} Val=${pdf1%,*}; eval $Var=$Val 2>/dev/null
+	Var=${pdf2#*,} Val=${pdf2%,*}; eval $Var=$Val 2>/dev/null
 
 	Pdf=$(eval print \$$Request)
 
+	print "<p>\\c"
 	if [ "$Pdf" ]; then
 		curl -s $Pdf >/tmp/$Request$$.pdf
-		print "<p>\\c"
 		pdftotext -layout -enc ASCII7 /tmp/$Request$$.pdf - |
 			tr -c "[:print:]" " " |
 			sed -e "s/ \+/ /g" -e "s-//-,-g" -e "s/\[//g" -e "s/\]//g" -e "s/\* /\.\.\. /g"
-		print "</p>"
 		rm -f /tmp/$Request$$.pdf
 	else
-		print "No $Request found for ${Opponent:-Opponent} on ${Date:-Date}"
+		print "No $Request found for ${Opponent:-Opponent} on ${Date:-Date}\\c"
 	fi
+	print "</p>"
 	;;
 
 presser)
