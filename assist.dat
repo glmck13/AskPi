@@ -20,6 +20,13 @@ $(crossfit.sh "${Speech#*crossfit}")
 .
 
 #
+# Colleen's schedule
+#
+=.*colleen
+$(d="${Speech#*colleen}"; pal -p ~pi/.pal/colleen.pal -d "${d:-today}" -c 0 | sed -e "s/^[^:]*:/:/")
+.
+
+#
 # Google news
 #
 =.*google.*new
