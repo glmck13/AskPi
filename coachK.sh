@@ -48,7 +48,7 @@ notes|quotes)
 
 	[[ "$record" == *.pdf* ]] && last=$record
 
-	print "$last" | IFS="|" read Date Opponent pdf1 pdf2
+	print "$last" | IFS="|" read Date Opponent Rank pdf1 pdf2
 	Var=${pdf1#*,} Val=${pdf1%,*}; eval $Var=$Val 2>/dev/null
 	Var=${pdf2#*,} Val=${pdf2%,*}; eval $Var=$Val 2>/dev/null
 
