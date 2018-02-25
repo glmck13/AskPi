@@ -22,7 +22,7 @@ case $Request in
 
 game)
 	print "<p>Here are details about our next game: \\c"
-	curl -s 'http://www.goduke.com/SportSelect.dbml?SPID=1845&SPSID=22726&DB_OEM_ID=4200' | grep -m1 -B40 "Live Audio" | sed -e "s/<[^>]*>//g" -e "/^[ 	]*$/d" | head -4 | sed -e "s/^[ 	]*//" -e "s/\&[^;]*;//g" -e "s/\*//g" -e "s/$/, /" | tr -d "\n"
+	curl -s 'http://www.goduke.com/SportSelect.dbml?SPID=1845&SPSID=22726&DB_OEM_ID=4200' | grep -m1 -B50 "Live Audio" | sed -e "s/<[^>]*>//g" -e "/^[ 	]*$/d" | head -6 | sed -e "s/^[ 	]*//" -e "s/\&[^;]*;//g" -e "s/\*//g" -e "s/$/, /" | tr -d "\n"
 	print "</p>"
 	;;
 
