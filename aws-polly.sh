@@ -24,7 +24,7 @@ cat - <<-EOF >$JsonReq
 	"SampleRate": "16000",
 	"Text": "<speak><prosody volume=\"x-loud\">$Speech</prosody></speak>",
 	"TextType": "ssml",
-	"VoiceId": "${AWS_VOICE:-Joey}"
+	"VoiceId": "${AWS_VOICE:-Matthew}"
 	}
 EOF
 
