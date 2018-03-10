@@ -7,6 +7,7 @@ NEXTWAV=nextwav.conf DATAFILE=assist.dat
 nextwav=$(<$NEXTWAV); (( nextwav = ++nextwav % 25 )); print $nextwav >$NEXTWAV
 
 TMPWAV=./tmp/audio$nextwav.wav; rm -f $TMPWAV
+. credentials.conf
 
 typeset -l Speech LastWord Announce
 
@@ -64,12 +65,20 @@ if [ "$Speech" ]; then
 	done <$DATAFILE
 fi
 
-[ "$Announce" != "t" -a "$Response" ] && pico2wave -l en-US -w $TMPWAV "<volume level='60'>$Response"
+Audio="$Response"
+if [ ! "$Audio" ]; then
+	Audio=$(print "$Html" | grep '<p>' | sed -e "s/<[^>]*>//g")
+fi
+
+if [ "$Announce" != "t" -a "$Audio" ]; then
+#	pico2wave -l en-US -w $TMPWAV "<volume level='60'>$Audio"
+	print "$Audio" | grep -o -E '[^\.]*.' | split -l5 --filter=aws-polly.sh >$TMPWAV
+fi
 [ "$Announce" = "y" -a -f $TMPWAV ] && aplay $TMPWAV 2>/dev/null
 
 typeset -A AnnounceButton
 AnnounceButton["y"]="" AnnounceButton["n"]=""
-AnnounceButton[${Announce:-y}]="checked"
+AnnounceButton[${Announce:-n}]="checked"
 
 cat - <<EOF
 Content-type: text/html
