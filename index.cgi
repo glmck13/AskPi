@@ -82,6 +82,7 @@ AnnounceButton[${Announce:-n}]="checked"
 
 cat - <<EOF
 Content-type: text/html
+Cache-Control: no-cache, no-store, must-revalidate
 Set-Cookie: LastWord=$(urlencode "$lastword")
 
 <html>
