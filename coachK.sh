@@ -57,7 +57,7 @@ notes|quotes)
 	print "<p>\\c"
 	if [ "$Pdf" ]; then
 		curl -s $Pdf >/tmp/$Request$$.pdf
-		pdftotext -layout -enc ASCII7 /tmp/$Request$$.pdf - |
+		pdftotext -enc ASCII7 /tmp/$Request$$.pdf - |
 			tr -c "[:print:]" " " |
 			sed -e "s/ \+/ /g" -e "s-//-,-g" -e "s/\[//g" -e "s/\]//g" -e "s/\* /\.\.\. /g"
 		rm -f /tmp/$Request$$.pdf
