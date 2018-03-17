@@ -60,7 +60,7 @@ notes|quotes)
 		pdftotext -enc ASCII7 /tmp/$Request$$.pdf - |
 			tr -c "[:print:]" " " |
 			sed -e "s/ \+/ /g" -e "s-//-,-g" -e "s/\[//g" -e "s/\]//g" -e "s/\* /\.\.\. /g"
-		rm -f /tmp/$Request$$.pdf
+		rm -f /tmp/$Request$$.pdf | cut -c1-7990
 	else
 		print "No $Request found for ${Opponent:-Opponent} on ${Date:-Date}\\c"
 	fi
