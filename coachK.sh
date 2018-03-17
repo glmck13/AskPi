@@ -59,8 +59,8 @@ notes|quotes)
 		curl -s $Pdf >/tmp/$Request$$.pdf
 		pdftotext -enc ASCII7 /tmp/$Request$$.pdf - |
 			tr -c "[:print:]" " " |
-			sed -e "s/ \+/ /g" -e "s-//-,-g" -e "s/\[//g" -e "s/\]//g" -e "s/\* /\.\.\. /g"
-		rm -f /tmp/$Request$$.pdf | cut -c1-7990
+			sed -e "s/ \+/ /g" -e "s-//-,-g" -e "s/\[//g" -e "s/\]//g" -e "s/\* /\.\.\. /g" | cut -c1-7990
+		rm -f /tmp/$Request$$.pdf
 	else
 		print "No $Request found for ${Opponent:-Opponent} on ${Date:-Date}\\c"
 	fi
