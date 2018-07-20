@@ -27,10 +27,19 @@ $(d="${Speech#*colleen}"; pal -p ~pi/.pal/colleen.pal -d "${d:-today}" -c 0 | se
 .
 
 #
-# Google news
+# Psalms
 #
-=.*google.*new
-'<a href=\\"https://news.google.com\\" >Google News</a>
+=.*psalm
+$(psalm.sh "${Speech#*psalm* }")
+.
+
+#
+# Duncam
+#
+=.*duncam
+=.*duncan
+=.*dog
+'$(duncam.sh)
 .
 
 #
@@ -48,12 +57,6 @@ $(d="${Speech#*colleen}"; pal -p ~pi/.pal/colleen.pal -d "${d:-today}" -c 0 | se
 $(reuters.sh)
 .
 
-#
-# Long news (AP)
-#
-=.*press
-$(apnews.sh)
-.
 
 #
 # Daily mass readings (Alexa)
@@ -61,16 +64,16 @@ $(apnews.sh)
 =.*alexa.*mass
 Downloading $(date +"%B %d")
 '<audio controls>
-!curl -sk https://mckspot.dyndns.org:8443/cdn/mkdailymassreadings.cgi >/dev/null
+!curl -sk https://mckpi.home:8443/local/mkdailymassreadings.cgi >/dev/null
 '<source src="https://mckspot.dyndns.org:8443/cdn/dailymassreadings.m3u">
 '</audio>
 .
+
 
 #
 # Daily mass readings
 #
 =.*mass
-=.*reading
 Downloading $(date +"%B %d")
 '<audio controls>
 '<source src="http://ccc.usccb.org/cccradio/NABPodcasts/$(date +\"%y_%m_%d\").mp3">
