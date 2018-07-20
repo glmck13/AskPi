@@ -15,7 +15,17 @@ Day=$(date -d "$Caldate" +%d )
 Year=$(date -d "$Caldate" +%Y )
 
 days=$(expr '(' $(date -d "$Caldate" +%s) - $(date +%s) + 86399 ')' / 86400)
-print "There are $days days left until $Caption."
+
+if [ "$days" -lt 0 ]; then
+	print "The wait is over for: $Caption. Be sure to celebrate the anniversary on $Month $Day next year!"
+	exit
+fi
+
+if [ "$days" -le 0 ]; then
+	print "Today is the day $Caption."
+else
+	print "There are $days days left until $Caption."
+fi
 
 MidSecs=$(date -d "$Caldate" +%s); let LoSecs=$MidSecs-86400; let HiSecs=$MidSecs+86400
 LoDay=$(date -d "@$LoSecs" +%d ); HiDay=$(date -d "@$HiSecs" +%d )
