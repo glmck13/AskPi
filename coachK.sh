@@ -22,37 +22,18 @@ case $Request in
 
 game)
 	print "<p>Here are details about our next game: \\c"
-	curl -s 'http://www.goduke.com/SportSelect.dbml?SPID=1845&SPSID=22726&DB_OEM_ID=4200' | grep -m1 -B50 "Live Audio" | sed -e "s/<[^>]*>//g" -e "/^[ 	]*$/d" | head -6 | sed -e "s/^[ 	]*//" -e "s/\&[^;]*;//g" -e "s/\*//g" -e "s/$/, /" | tr -d "\n"
+	curl -s 'http://www.goduke.com/SportSelect.dbml?&DB_OEM_ID=4200&SPID=1845&SPSID=22726' | grep __INITIAL_STATE__ | tr '{' '\n' | grep "^.id.:.*winLoss.:\"\",.*scoreInfo.:\"\"," | head -1 | sed -e "s/\",/&~/g" | tr '~' '\n' | grep -E "opponent.:|date.:|time.:|location.:" | tr -d '\n'
 	print "</p>"
 	;;
 
 notes|quotes)
-	record="" last=""
-	curl -s 'http://www.goduke.com/SportSelect.dbml?&DB_OEM_ID=4200&SPID=1845&SPSID=22726' |
-		grep -Ei -A1 "class=.opponent|class=.date_nowrap|notes$|quotes$" |
-		grep "^					" |
-		sed -e "s/.*HREF=.\(.*\.pdf\).*.>\(.*\)/\1,\2/" -e "s/<[^>]\+>//g" -e "s/\&[^;]*;//g" -e "s/	//g" -e "/^$/d" | while read line
-	do
-		line=${line//\*/}
+	if [ "$Request" = "notes" ]; then
+		Key=11
+	elif [ "$Request" = "quotes" ]; then
+		Key=12
+	fi
 
-		case $line in
-		???,\ *)
-			[[ "$record" == *.pdf* ]] && last=$record
-			record=$line
-			;;
-
-		*)
-			record+="|$line"
-		esac
-	done
-
-	[[ "$record" == *.pdf* ]] && last=$record
-
-	print "$last" | IFS="|" read Date Opponent Rank pdf1 pdf2
-	Var=${pdf1#*,} Val=${pdf1%,*}; eval $Var=$Val 2>/dev/null
-	Var=${pdf2#*,} Val=${pdf2%,*}; eval $Var=$Val 2>/dev/null
-
-	Pdf=$(eval print \$$Request)
+	Pdf=$(curl -s 'http://www.goduke.com/SportSelect.dbml?&DB_OEM_ID=4200&SPID=1845&SPSID=22726' | grep __INITIAL_STATE__ | tr '{' '\n' | grep -E "key.:$Key" | tail -1 | sed -e "s/.*url.:.//" -e "s/.,.*//")
 
 	print "<p>\\c"
 	if [ "$Pdf" ]; then
