@@ -16,6 +16,10 @@ Year=$(date -d "$Caldate" +%Y )
 
 days=$(expr '(' $(date -d "$Caldate" +%s) - $(date +%s) + 86399 ')' / 86400)
 
+Voice=$(shuf -e -n1 Joanna Joey Justin Kendra Kimberly Matthew Salli Nicole Russell Amy Brian Emma)
+
+print "<speak><voice name=$Voice><prosody rate=\"115%\">"
+
 if [ "$days" -lt 0 ]; then
 	print "The wait is over for: $Caption. Be sure to celebrate the anniversary on $Month $Day next year!"
 	exit
@@ -65,3 +69,5 @@ for c in events birthdays deaths weddings
 do
 	curl -s https://www.onthisday.com/$c/$Month/$Day | grep event-list__item | sed -e "s/<script.*script>//g" -e "s/<[^>]*>//g" | shuf -n1 | recode -f html..ascii | sed -e "s/ /... /" -e "s/ \& / and /g" -e "s/^/${Categories[$c]} /" -e "s/$/.../"
 done
+
+print "</prosody></voice></speak>"
