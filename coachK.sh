@@ -22,7 +22,7 @@ case $Request in
 
 game)
 	print "<p>Here are details about our next game: \\c"
-	curl -s 'http://www.goduke.com/SportSelect.dbml?&DB_OEM_ID=4200&SPID=1845&SPSID=22726' | grep __INITIAL_STATE__ | tr '{' '\n' | grep "^.id.:.*winLoss.:\"\",.*scoreInfo.:\"\"," | head -1 | sed -e "s/\",/&~/g" | tr '~' '\n' | grep -E "opponent.:|date.:|time.:|location.:" | tr -d '\n'
+	curl -s 'https://www.goduke.com/SportSelect.dbml?&DB_OEM_ID=4200&SPID=1845&SPSID=22726' | grep __INITIAL_STATE__ | tr '{' '\n' | grep "^.id.:.*winLoss.:\"\",.*scoreInfo.:\"\"," | head -1 | sed -e "s/\",/&~/g" | tr '~' '\n' | grep -E "opponent.:|date.:|time.:|location.:" | tr -d '\n'
 	print "</p>"
 	;;
 
@@ -33,7 +33,7 @@ notes|quotes)
 		Key=12
 	fi
 
-	Pdf=$(curl -s 'http://www.goduke.com/SportSelect.dbml?&DB_OEM_ID=4200&SPID=1845&SPSID=22726' | grep __INITIAL_STATE__ | tr '{' '\n' | grep -E "key.:$Key" | tail -1 | sed -e "s/.*url.:.//" -e "s/.,.*//")
+	Pdf=$(curl -s 'https://www.goduke.com/SportSelect.dbml?&DB_OEM_ID=4200&SPID=1845&SPSID=22726' | grep __INITIAL_STATE__ | tr '{' '\n' | grep -E "key.:$Key" | tail -1 | sed -e "s/.*url.:.//" -e "s/.,.*//")
 
 	print "<p>\\c"
 	if [ "$Pdf" ]; then
