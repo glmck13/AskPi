@@ -16,7 +16,7 @@ Year=$(date -d "$Caldate" +%Y )
 
 days=$(expr '(' $(date -d "$Caldate" +%s) - $(date +%s) + 86399 ')' / 86400)
 
-Voice=$(shuf -e -n1 Joanna Joey Justin Kendra Kimberly Matthew Salli Nicole Russell Amy Brian Emma)
+Voice=$(shuf -e -n1 Joanna Joey Justin Kendra Kimberly Matthew Salli Nicole Russell Amy Brian Emma Aditi Raveena)
 
 print "<speak><voice name=$Voice><prosody rate=\"115%\">"
 
