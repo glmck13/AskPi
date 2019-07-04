@@ -18,7 +18,7 @@ days=$(expr '(' $(date -d "$Caldate" +%s) - $(date +%s) + 86399 ')' / 86400)
 
 Voice=$(shuf -e -n1 Joanna Joey Justin Kendra Kimberly Matthew Salli Nicole Russell Amy Brian Emma Aditi Raveena)
 
-print "<speak><voice name=$Voice><prosody rate=\"115%\">"
+print "<speak><voice name=$Voice><prosody rate=\"110%\">"
 
 if [ "$days" -lt 0 ]; then
 	print "The wait is over for: $Caption. Be sure to celebrate the anniversary on $Month $Day next year!"
