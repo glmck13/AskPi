@@ -67,7 +67,7 @@ done
 
 for c in events birthdays deaths weddings
 do
-	curl -s https://www.onthisday.com/$c/$Month/$Day | grep event-list__item | sed -e "s/<script.*script>//g" -e "s/<[^>]*>//g" | shuf -n1 | recode -f html..ascii | sed -e "s/ /... /" -e "s/ \& / and /g" -e "s/^/${Categories[$c]} /" -e "s/$/.../"
+	curl -s https://www.onthisday.com/$c/$Month/$Day | grep "href=./$c/date/" | sed -e "s/<script.*script>//g" -e "s/<[^>]*>//g" | shuf -n1 | recode -f html..ascii | sed -e "s/ /... /" -e "s/ \& / and /g" -e "s/^/${Categories[$c]} /" -e "s/$/.../"
 done
 
 print "</prosody></voice></speak>"
