@@ -4,64 +4,29 @@ typeset -l Request Var
 Request=$1
 
 case $Request in
-	*notes*)
-		Request="notes";;
-	*quotes*)
-		Request="quotes";;
-	*press*|*conference*|*post*)
-		Request="presser";;
-	*game*)
-		Request="game";;
-	*pardon*|*my*take*)
-		Request="pardon-my-take";;
-	*)
-		Request="presser";;
-esac
-
-case $Request in
 
 game)
+	tail=80
 	print "<p>Here are details about our next game: \\c"
-	curl -sL 'http://www.goduke.com/SportSelect.dbml?&DB_OEM_ID=4200&SPID=1845&SPSID=22726' | grep __INITIAL_STATE__ | tr '{' '\n' | grep "^.id.:.*winLoss.:\"\",.*scoreInfo.:\"\"," | head -1 | sed -e "s/\",/&~/g" | tr '~' '\n' | grep -E "opponent.:|date.:|time.:|location.:" | tr -d '\n'
+	echo -n $(curl -s https://goduke.com/sports/mens-basketball/schedule | grep -A $tail Hide | tail -$tail | egrep "<span|<img" | sed -e "s/.*alt=.//" -e "s/ Logo.*//" -e "s/<[^>]*>//g" -e "s/TV://" -e "s/ vs//" | tr -c "[:print:]" " ")
 	print "</p>"
 	;;
 
 notes|quotes)
 	if [ "$Request" = "notes" ]; then
-		Key=11
-	elif [ "$Request" = "quotes" ]; then
-		Key=12
+		search=Notes.pdf tail=1
+	else
+		search=Quotes.pdf tail=3
 	fi
-
-	Pdf=$(curl -sL 'http://www.goduke.com/SportSelect.dbml?&DB_OEM_ID=4200&SPID=1845&SPSID=22726' | grep __INITIAL_STATE__ | tr '{' '\n' | grep -E "key.:$Key" | tail -1 | sed -e "s/.*url.:.//" -e "s/.,.*//")
 
 	print "<p>\\c"
-	if [ "$Pdf" ]; then
-		curl -s $Pdf >/tmp/$Request$$.pdf
-		pdftotext -enc ASCII7 /tmp/$Request$$.pdf - |
-			tr -c "[:print:]" " " |
-			sed -e "s/ \+/ /g" -e "s-//-,-g" -e "s/\[//g" -e "s/\]//g" -e "s/\* /\.\.\. /g" | cut -c1-7990
-		rm -f /tmp/$Request$$.pdf
-	else
-		print "No $Request found for ${Opponent:-Opponent} on ${Date:-Date}\\c"
-	fi
+	curl -s https://goduke.com/sports/mens-basketball/schedule | grep "href.*$search" | tail -$tail | sed -e 's/.*href="\([^"]*\)".*/\1/' -e "s-//-/-g" | while read pdf
+	do
+		curl -s https://s3.amazonaws.com/goduke.com$pdf >/tmp/$Request$$.pdf
+		pdftotext -enc ASCII7 /tmp/$Request$$.pdf -
+	done | sed -e "s/ \+/ /g" -e "s-//-,-g" -e "s/\[//g" -e "s/\]//g" -e "s/\* /\.\.\. /g" | tr -c "[:print:]" " " | cut -c1-7990
 	print "</p>"
-	;;
-
-presser)
-	curl -sL https://tunein.com/station/?stationId=230308 |
-		grep -o "[^,;>]*[,;>]" |
-		grep -E '"title"|"playUrl"' |
-		sed -e "s/[^:]*://" -e 's/"//g' -e "s/(.*)//g" -e "s?.u002F?/?g" -e "s/,//g" |
-		grep -B1 "\.mp3" | head -2 | tr "\n" "|" | IFS="|" read Opponent Url
-		print "<p>$Opponent</p>"
-		print "<audio controls><source src=$Url></audio>"
-	;;
-
-pardon-my-take)
-	curl -sk https://mckspot.dyndns.org:8443/cdn/mkpardonmytake.cgi >/dev/null
-	print "<p>Accessing Pardon My Take...</p>"
-	print "<audio controls><source src="https://mckspot.dyndns.org:8443/cdn/pardonmytake.m3u"></audio>"
+	rm -f /tmp/$Request$$.pdf
 	;;
 
 esac
