@@ -8,7 +8,7 @@ case $Request in
 game)
 	comptail=200 hidetail=75
 	print "<p>Here are details about our next game: \\c"
-	echo -n $(curl -s https://goduke.com/sports/mens-basketball/schedule | grep -A$comptail sidearm-schedule-game-completed | grep -A$hidetail Hide | tail -$hidetail | egrep "<span|<img" | sed -e "s/.*alt=.//" -e "s/ Logo.*//" -e "s/<[^>]*>//g" -e "s/TV://" -e "s/ vs//" | tr -c "[:print:]" " ")
+	echo -n $(curl -s https://goduke.com/sports/mens-basketball/schedule | grep -A$comptail sidearm-schedule-game-completed | grep -A$hidetail Hide | tail -$hidetail | egrep "<span|<img" | sed -e "s/.*alt=.//" -e "s/ Logo.*//" -e "s/<[^>]*>//g" -e "s/*//g" -e "s/TV://" -e "s/ vs//" | tr -c "[:print:]" " ")
 	print "</p>"
 	;;
 
