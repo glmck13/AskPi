@@ -28,7 +28,7 @@ recap)
 	print "<p>$(recode -f html..ascii <$outfile | sed -e "s/<[^>]*>//g" -e "s-//-,-g" -e "s/\[//g" -e "s/\]//g" | tr -c "[:print:]" " " | sed -e "s/ \+/ /g" -e "s/\([A-Z][A-Z ]\+ \)/- \1 - /g" | cut -c1-7990)</p>"
 	rm -f "$outfile"
 	;;
-	
+
 *)
 	print "<p>You said: $Request. I don't understand that!</p>"
 	;;
