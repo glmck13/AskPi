@@ -12,7 +12,7 @@ game)
 	print "</p>"
 	;;
 
-recap)
+recap|notes)
 	outfile="/tmp/$Request$$.html"
 	url=$(curl -s http://www.guhoyas.com/sports/mens-basketball/schedule | grep -i recap | tail -1 | sed -e 's/.*href="\([^"]*\)".*/\1/')
 	curl -s http://www.guhoyas.com/$url >$outfile
