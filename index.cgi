@@ -88,6 +88,7 @@ Set-Cookie: LastWord=$(urlencode "$lastword")
 <html>
 <head>
 <meta name="viewport" content="width=device-width">
+<link rel="apple-touch-icon" href="duncan.ico">
 </head>
 
 <body>
