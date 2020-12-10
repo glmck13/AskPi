@@ -24,7 +24,7 @@ notes|quotes)
 	do
 		curl -s https://s3.amazonaws.com/goduke.com$pdf >/tmp/$Request$$.pdf
 		pdftotext -enc ASCII7 /tmp/$Request$$.pdf -
-	done | sed -e "s/ \+/ /g" -e "s-//-,-g" -e "s/\[//g" -e "s/\]//g" -e "s/\* /\.\.\. /g" | tr -c "[:print:]" " " | cut -c1-7990
+	done | sed -e 's/"//g' -e "s/ \+/ /g" -e "s-//-,-g" -e "s/\[//g" -e "s/\]//g" -e "s/\* /\.\.\. /g" | tr -c "[:print:]" " " | cut -c1-5000
 	print "</p>"
 	rm -f /tmp/$Request$$.pdf
 	;;

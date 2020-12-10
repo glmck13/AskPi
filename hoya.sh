@@ -24,7 +24,7 @@ recap|notes)
 		w
 		q
 	EOF
-	print "<p>$(recode -f html..ascii <$outfile | sed -e "s/<[^>]*>/ /g" -e "s-//-,-g" -e "s/\[//g" -e "s/\]//g" | tr -c "[:print:]" " " | sed -e "s/ \+/ /g" -e "s/\([A-Z][A-Z ]\+ \)/- \1 - /g" | cut -c1-7990)</p>"
+	print "<p>$(recode -f html..ascii <$outfile | sed -e "s/<[^>]*>/ /g" -e "s-//-,-g" -e "s/\[//g" -e "s/\]//g" | tr -c "[:print:]" " " | sed -e "s/ \+/ /g" -e "s/\([A-Z][A-Z ]\+ \)/- \1 - /g" | cut -c1-5000)</p>"
 	rm -f "$outfile"
 	;;
 
