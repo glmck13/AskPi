@@ -16,7 +16,7 @@ notes|quotes)
 	if [ "$Request" = "notes" ]; then
 		search=Notes.pdf tail=1
 	else
-		search=Quotes.pdf tail=3
+		search=Quotes.pdf tail=2
 	fi
 
 	print "<p>\\c"
