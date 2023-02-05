@@ -22,7 +22,8 @@ notes|quotes)
 	print "<p>\\c"
 	curl -s https://goduke.com/sports/mens-basketball/schedule | grep "href.*$search" | tail -$tail | sed -e 's/.*href="\([^"]*\)".*/\1/' -e "s-//-/-g" | while read pdf
 	do
-		curl -s https://s3.amazonaws.com/goduke.com$pdf >/tmp/$Request$$.pdf
+		#curl -s https://s3.amazonaws.com/goduke.com$pdf >/tmp/$Request$$.pdf
+		curl -s https://s3.us-east-2.amazonaws.com/sidearm.nextgen.sites/goduke.com$pdf >/tmp/$Request$$.pdf
 		pdftotext -enc ASCII7 /tmp/$Request$$.pdf -
 	done | sed -e 's/"//g' -e "s/ \+/ /g" -e "s-//-,-g" -e "s/\[//g" -e "s/\]//g" -e "s/\* /\.\.\. /g" | tr -c "[:print:]" " " | cut -c1-5000
 	print "</p>"
