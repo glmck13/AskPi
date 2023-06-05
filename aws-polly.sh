@@ -65,7 +65,11 @@ DateRegionServiceKey=$(compute_hmac hexkey:$DateRegionKey ${AWS_SERVICE})
 SigningKey=$(compute_hmac hexkey:$DateRegionServiceKey "aws4_request")
 Signature=$(compute_hmac hexkey:$SigningKey "${StringToSign}")
 
-curl -s --data-binary @${JsonReq} \
+#curl -s --data-binary @${JsonReq} \
+#
+# When running curl as a snap, /tmp files aren't accesible between apps!
+#
+cat $JsonReq | curl -s --data-binary @- \
 	-H "Authorization: AWS4-HMAC-SHA256 Credential=${AWS_KEY:?}/${CredentialScope}, SignedHeaders=${HeaderList}, Signature=${Signature}" \
 	-H "content-type:application/json" \
 	-H "x-amz-date:${API_TIME}" \
